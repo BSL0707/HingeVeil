@@ -2,7 +2,7 @@ import subprocess
 import tempfile
 import unittest
 from pathlib import Path
-from check_git_history import audit_history
+from check_git_history import audit_history, scan_commit_metadata
 
 class HistoryTests(unittest.TestCase):
     def setUp(self):
@@ -30,6 +30,24 @@ class HistoryTests(unittest.TestCase):
         report = audit_history(self.root)
         self.assertEqual(report["commits_scanned"], 1)
         self.assertEqual(report["findings"], [])
+
+    def test_github_web_flow_alias_is_not_a_private_email(self):
+        self.run_git("config", "user.email", "noreply" + "@" + "github.com")
+        (self.root / "Sources/App.swift").write_text("import Foundation\n")
+        self.commit()
+        self.assertEqual(audit_history(self.root)["findings"], [])
+
+    def test_public_alias_does_not_exempt_message_text(self):
+        alias = "noreply" + "@" + "github.com"
+        metadata = "author GitHub <" + alias + "> 1 +0000\n\nMessage: " + alias
+        found = scan_commit_metadata(metadata, "fixture")
+        self.assertEqual(len(found), 1)
+        self.assertEqual(found[0]["line"], 3)
+
+    def test_alias_lookalike_is_not_exempt(self):
+        address = "noreply" + "@" + "github.com.example.invalid"
+        metadata = "committer Fixture <" + address + "> 1 +0000\n\nfixture"
+        self.assertEqual(scan_commit_metadata(metadata, "fixture")[0]["rule"], "email_address")
 
     def test_deleted_secret_is_still_found_in_history(self):
         fake = "gh" + "p_" + "A" * 36

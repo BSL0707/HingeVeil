@@ -14,6 +14,20 @@ def git(root, *args, allow_failure=False):
         raise ValueError("Git inspection failed; raw command output was withheld.")
     return result
 
+def scan_commit_metadata(metadata, label):
+    header, separator, message = metadata.partition("\n\n")
+    def public_identity(match):
+        address = match.group(3)
+        is_user_alias = re.fullmatch(r"[A-Za-z0-9._%+-]+@users\.noreply\.github\.com", address)
+        is_web_flow = address == "noreply" + "@" + "github.com"
+        if is_user_alias or is_web_flow:
+            return match.group(1) + " " + match.group(2) + " <PUBLIC_NOREPLY> " + match.group(4)
+        return match.group(0)
+    # Exempt exact public aliases in actual identity headers only. Never exempt
+    # source contents, message text or addresses that merely contain the alias.
+    header = re.sub(r"(?m)^(author|committer) (.*) <([^<>]+)> (\d+ [+-]\d{4})$", public_identity, header)
+    return scan_text(header + separator + message, label)
+
 def audit_history(root):
     root = Path(root).resolve()
     result = git(root, "rev-parse", "--show-toplevel", allow_failure=True)
@@ -65,9 +79,7 @@ def audit_history(root):
         inspect(mode, "blob", oid, path, "index")
     for commit in commits:
         metadata = git(root, "cat-file", "commit", commit).stdout.decode("utf-8", errors="replace")
-        # GitHub no-reply addresses are public commit aliases, not private emails.
-        metadata = re.sub(r"[A-Za-z0-9._%+-]+@users\.noreply\.github\.com", "PUBLIC_NOREPLY", metadata)
-        report["findings"] += scan_text(metadata, "commit:" + commit[:12])
+        report["findings"] += scan_commit_metadata(metadata, "commit:" + commit[:12])
         for record in git(root, "ls-tree", "-r", "-z", "--full-tree", commit).stdout.split(b"\0"):
             if record:
                 header, raw_path = record.split(b"\t", 1)

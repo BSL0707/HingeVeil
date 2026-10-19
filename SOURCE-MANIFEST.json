@@ -254,8 +254,8 @@
     },
     {
       "path": "scripts/check_git_history.py",
-      "bytes": 4775,
-      "sha256": "bbef3a81c950e1c7c1211cd5fb69424a31c837c72cf80b02ff1cce5b27209f3b"
+      "bytes": 5420,
+      "sha256": "cf992a94873db39383027d1e033138e056637cf693cade631bb2f3a256d8c24d"
     },
     {
       "path": "scripts/check_source.py",
@@ -279,8 +279,8 @@
     },
     {
       "path": "scripts/test_git_history.py",
-      "bytes": 3089,
-      "sha256": "db945de6530a7ac4703bc1489719634f5a944287be4715b2fa38924affda9c1d"
+      "bytes": 4041,
+      "sha256": "72765583036f4d43fc840b273174b30fa399ac6c564b9bd02e02c663c97bf611"
     },
     {
       "path": "scripts/test_source_export.py",
