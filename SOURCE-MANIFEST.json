@@ -1,0 +1,291 @@
+{
+  "status": "local source export; not uploaded",
+  "license": "MIT_selected_by_owner_rights_review_not_certified",
+  "files": [
+    {
+      "path": ".editorconfig",
+      "bytes": 222,
+      "sha256": "16862ed8899be88330a5ec8a825960cc0c056ccf095ab1ebb005ccbe3508458c"
+    },
+    {
+      "path": ".gitattributes",
+      "bytes": 214,
+      "sha256": "b436f14354c3f3b6b2c61d4003db945f750aa3fdcd6bc1360c17f6e2e63b8197"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.yml",
+      "bytes": 1775,
+      "sha256": "59fe1e5c2fa7b4492ab85d303c63a786d26392fd3e0b7ac47c040f03faee663b"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/config.yml",
+      "bytes": 28,
+      "sha256": "1f103c6a9dd07cd13a9a6f17ace6b813f47747eb9cb7e00488cb2073caaf91bb"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/feature_request.yml",
+      "bytes": 473,
+      "sha256": "e39e6a534ccf1de862c1e408a1ff5cf3b14b8fb333ed9a10edc6d681d5535f43"
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "bytes": 145,
+      "sha256": "3f32bd295d1462a4844d206458a300cb8b6584e99ebc98daf3f17ac65d51835a"
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "bytes": 676,
+      "sha256": "3d6063ab129e6f55db6153188c570d8df62abccbc855e24b4d92f82abe5b9ba8"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 647,
+      "sha256": "f23666aa5f87cb518b2aa3d99909b929b79a972805acf004e14344135766e523"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 266,
+      "sha256": "1b79d2b00f1415d9d23e896601123dc2ac8ce64ec5a0dfe7d930d284b7f03fcb"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 855,
+      "sha256": "b670d3e02356b5ce5c97233213ea1464ea964a8a2e68c468cb781512e289281c"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "bytes": 2642,
+      "sha256": "8c25cd53a3ae28bee03bd5e2159f4dc2fa58773e2d8b54fadecc75c2348e62fe"
+    },
+    {
+      "path": "Docs/GitHubUpload.en.md",
+      "bytes": 5435,
+      "sha256": "5da73ca0be84a3ceca47699ab721ddf2ea9a1ec5bc0e39bea4f1200614e4444e"
+    },
+    {
+      "path": "Docs/GitHubUpload.ko.md",
+      "bytes": 6530,
+      "sha256": "1c9e6ad529ff7889f4fdce1569a9dae627c077f71926240101043dfd91b70560"
+    },
+    {
+      "path": "Docs/Manual.en.md",
+      "bytes": 6397,
+      "sha256": "193ff23a4633475ccd4e6e1399f99e4bec4803e65686da6784752dda2119b43f"
+    },
+    {
+      "path": "Docs/Manual.ko.md",
+      "bytes": 7279,
+      "sha256": "8c8d714039ed1c0bc363ced36141e9ba3b8e09252002374c0034aaebba34fc32"
+    },
+    {
+      "path": "Docs/PublicationReview.md",
+      "bytes": 9774,
+      "sha256": "a55c4bffe5587f559a9644f6f147295fbf3b83352cfc062e404baefccd3c3ae2"
+    },
+    {
+      "path": "Docs/RightsReview.md",
+      "bytes": 3998,
+      "sha256": "30ce89003f1aacad19b682eeee8250a06d14a14229cab9b6f25d139b69ce8bc4"
+    },
+    {
+      "path": "Info.plist",
+      "bytes": 1227,
+      "sha256": "e10fca9bebc2514522f8b1e54fb9dc01c1b34d26fb5c5537c6c1bc124bb99f22"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1064,
+      "sha256": "a8dd1b995997a03eaa28a8de50d63fea49fe387e9faad528e5412f97b4319e9b"
+    },
+    {
+      "path": "LICENSE-STATUS.md",
+      "bytes": 2020,
+      "sha256": "ec98ad3a92fda01d34fb3c91a194539cb52eb419e1e571d431863b7fee432a62"
+    },
+    {
+      "path": "PROVENANCE.md",
+      "bytes": 4277,
+      "sha256": "d00f6096bc520cff16c2534911ac658c72e9643bf9543ef9517b7883e4fad27b"
+    },
+    {
+      "path": "Package.swift",
+      "bytes": 601,
+      "sha256": "ebb3d6a82d36cf3d562a677510cc7918d770f250c0d09368adcf0dfcc1cbb7c4"
+    },
+    {
+      "path": "README.ko.md",
+      "bytes": 5052,
+      "sha256": "fe6d7c36afc23ae0fdf749be8ff0c7aa982327d6f42b0d0fd56aa02cf13f2a08"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4721,
+      "sha256": "26546a44b797dfe6a33b4a2d841d7c66156425ecf5d7e6a1ce091263458c961c"
+    },
+    {
+      "path": "SECURITY.md",
+      "bytes": 4341,
+      "sha256": "c087cdc8f96800cc687b22b6fc89fc62e58345fb89577e028ce36e085dad25a2"
+    },
+    {
+      "path": "Sources/HingeVeil/AppController.swift",
+      "bytes": 14230,
+      "sha256": "3196bd697b7740778c8c253d43ff70f572b6e7675c02ddfdfda477b6b860a545"
+    },
+    {
+      "path": "Sources/HingeVeil/DesktopCapture.swift",
+      "bytes": 5588,
+      "sha256": "736a1c504ba30c23bd2aec20fdf7321e35b3d1004cdbbed94e769242c6fe95ed"
+    },
+    {
+      "path": "Sources/HingeVeil/EffectWindow.swift",
+      "bytes": 5493,
+      "sha256": "057e3849838b4db8215ab03ff2305aa3582f0f1cc4b1610318996e929894e21b"
+    },
+    {
+      "path": "Sources/HingeVeil/HingeSensor.swift",
+      "bytes": 5383,
+      "sha256": "12247890d8fea54baacf05eb0227af99552b6cebab9deeabba93725f3f24966a"
+    },
+    {
+      "path": "Sources/HingeVeil/IconArtwork.swift",
+      "bytes": 2965,
+      "sha256": "c4b21f07af8f3bf2434b11218ad6987d92034013a2f52ec4da41364a611cf2f7"
+    },
+    {
+      "path": "Sources/HingeVeil/Resources/PreviewTiger.png",
+      "bytes": 2615421,
+      "sha256": "0256ec5af53df27b820d3b774ddc73512e51e0c78d092c4faabd3f04be66d416"
+    },
+    {
+      "path": "Sources/HingeVeil/Resources/Veil.metal",
+      "bytes": 5046,
+      "sha256": "015ca1f872adc55ad2799020fbe5323f0266d67fa1bea6963d73eada9f94887a"
+    },
+    {
+      "path": "Sources/HingeVeil/SafetyGuard.swift",
+      "bytes": 3607,
+      "sha256": "4eed9262588f2ca54615d4f56b495e5b5188464bac701ff49939f05096214728"
+    },
+    {
+      "path": "Sources/HingeVeil/SettingsView.swift",
+      "bytes": 6521,
+      "sha256": "f1aab7526a282b60169ca8d094c54c4817ffe6dbc64cb6b1f40258e5df948af0"
+    },
+    {
+      "path": "Sources/HingeVeil/VeilRenderer.swift",
+      "bytes": 34075,
+      "sha256": "a16c9503de92a335ebc4e182283c27eb4b6170324c35432d6153f02b71530fc8"
+    },
+    {
+      "path": "Sources/HingeVeil/WindowCheck.swift",
+      "bytes": 8045,
+      "sha256": "ecbc993b45e70c313109b9652613bac1eba0b673035ad6f7162d278fa898d0cf"
+    },
+    {
+      "path": "Sources/HingeVeil/main.swift",
+      "bytes": 8357,
+      "sha256": "4fe9f3ee2aeb5cb0673c3d835366a15797ac1564a43a0fd9b1d6edab0167c946"
+    },
+    {
+      "path": "Sources/HingeVeilCore/EffectGate.swift",
+      "bytes": 1514,
+      "sha256": "c4d6a768bb333349d197eb47c354edc155ba9eea5ca657be871438021a0272e0"
+    },
+    {
+      "path": "Sources/HingeVeilCore/Localization.swift",
+      "bytes": 4449,
+      "sha256": "e7885adb38ddfc29614acf2eacd6ff7b29d808f913abf458f7c81a0a3baf9289"
+    },
+    {
+      "path": "Sources/HingeVeilCore/Resources/Manual.en.txt",
+      "bytes": 6397,
+      "sha256": "193ff23a4633475ccd4e6e1399f99e4bec4803e65686da6784752dda2119b43f"
+    },
+    {
+      "path": "Sources/HingeVeilCore/Resources/Manual.ko.txt",
+      "bytes": 7279,
+      "sha256": "8c8d714039ed1c0bc363ced36141e9ba3b8e09252002374c0034aaebba34fc32"
+    },
+    {
+      "path": "Sources/HingeVeilCore/Resources/en.lproj/InfoPlist.strings",
+      "bytes": 167,
+      "sha256": "70eda4638170b77290579e6c51c53ac1fe5a41965950db858c7dd8df7524f320"
+    },
+    {
+      "path": "Sources/HingeVeilCore/Resources/en.lproj/Localizable.strings",
+      "bytes": 7350,
+      "sha256": "ae6dc44f5467e890bdd2bd1066781b6acbbc9fba28e5ffb6296ec7c5d3659968"
+    },
+    {
+      "path": "Sources/HingeVeilCore/Resources/ko.lproj/InfoPlist.strings",
+      "bytes": 180,
+      "sha256": "1153dc3cf9465a7cd7b07b6257a6226579aac5d577d656b054f4f52798cb4a04"
+    },
+    {
+      "path": "Sources/HingeVeilCore/Resources/ko.lproj/Localizable.strings",
+      "bytes": 8081,
+      "sha256": "b61744427e3a387b5eb9bfc0cb47914f7c5630721bfee67d9cab563f9647e809"
+    },
+    {
+      "path": "Sources/HingeVeilCore/VeilMotion.swift",
+      "bytes": 5707,
+      "sha256": "62b9e722361b206ade5326c1bfe243ef9350573660abaa9313583381de6ee69c"
+    },
+    {
+      "path": "Tests/HingeVeilCoreTests/CoreTests.swift",
+      "bytes": 18467,
+      "sha256": "f28abff2d6c4a0bd19d11cc74932eba61211b3e25407bb1350847fb657ce9e66"
+    },
+    {
+      "path": "Tests/HingeVeilCoreTests/LocalizationTests.swift",
+      "bytes": 2652,
+      "sha256": "7df1c605efa349859bce8191e4530cc0854d9e4e0d33d374c8da3ea8e8f9159f"
+    },
+    {
+      "path": "build.sh",
+      "bytes": 2349,
+      "sha256": "f839ab9d8351e1d641db1487396997d3a9bf6c75f516603dbf9c3878cddc4d88"
+    },
+    {
+      "path": "scripts/audit_publication.py",
+      "bytes": 8932,
+      "sha256": "59ecc9fc6d34b943987b82bc1bd4bc987b54192501eb0bda583c9fdb775d973c"
+    },
+    {
+      "path": "scripts/check_git_history.py",
+      "bytes": 4775,
+      "sha256": "bbef3a81c950e1c7c1211cd5fb69424a31c837c72cf80b02ff1cce5b27209f3b"
+    },
+    {
+      "path": "scripts/check_source.py",
+      "bytes": 2502,
+      "sha256": "7d66fb824aa553764b85aabd2f76f7609339b90cc254888afd17a441b306c6d0"
+    },
+    {
+      "path": "scripts/ci.sh",
+      "bytes": 489,
+      "sha256": "3e9001ac28f76c0ee3ff38e1ddf651f1e7a154eb118b5e37d6314bd579a1c2be"
+    },
+    {
+      "path": "scripts/export_source.py",
+      "bytes": 2278,
+      "sha256": "ba2c3e1cca0bbde57429f0fa0180291d382531f2b05587134c9477dc71ead7ae"
+    },
+    {
+      "path": "scripts/test_audit_publication.py",
+      "bytes": 2843,
+      "sha256": "643de7eae0ed478519ad5edd087009dbc6f61769fb81bafd51e61548dd219c47"
+    },
+    {
+      "path": "scripts/test_git_history.py",
+      "bytes": 3089,
+      "sha256": "db945de6530a7ac4703bc1489719634f5a944287be4715b2fa38924affda9c1d"
+    },
+    {
+      "path": "scripts/test_source_export.py",
+      "bytes": 2570,
+      "sha256": "12ebc9877b22a7de7b6f4859a5d1f86c82f1650566d9e29b1a1cf96ea6536cc1"
+    }
+  ]
+}

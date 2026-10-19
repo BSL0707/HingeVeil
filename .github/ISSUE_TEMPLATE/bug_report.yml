@@ -1,0 +1,46 @@
+name: Bug report / 오류 제보
+description: Report a non-security issue without private screen contents.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not post security vulnerabilities here. Use the private route in SECURITY.md.
+        Do not attach credentials, serial numbers, full diagnostics or private screen recordings.
+        보안 취약점은 SECURITY.md의 비공개 경로로 제보하세요.
+        인증정보·일련번호·전체 진단·개인 화면 영상은 올리지 마세요.
+        If the overlay is stuck, click once or press Control+Option+Command+Esc; quit the app if needed.
+  - type: input
+    id: version
+    attributes:
+      label: App version / 앱 버전
+      placeholder: 0.1.11
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: macOS and Mac model / macOS 및 맥 모델
+      description: Chip, model year and screen size only. No serial number or device identifier.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps and observed result / 재현 방법과 실제 결과
+      description: Include start angle, blur level, Mission Control/fullscreen and sleep/lock state.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result / 기대한 결과
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check / 개인정보 확인
+      options:
+        - label: I removed private information and am not reporting a security vulnerability publicly. / 개인정보를 제거했고 보안 취약점을 공개 제보하지 않습니다.
+          required: true

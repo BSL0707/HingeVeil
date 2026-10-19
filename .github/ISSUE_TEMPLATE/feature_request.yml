@@ -1,0 +1,17 @@
+name: Feature request / 기능 제안
+description: Suggest an improvement in Korean or English.
+title: "[Feature] "
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Problem or need / 필요한 이유
+      description: Do not include private screen contents or credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior / 제안하는 동작
+    validations:
+      required: true
