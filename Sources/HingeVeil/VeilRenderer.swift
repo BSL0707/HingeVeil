@@ -316,7 +316,7 @@ final class VeilRenderer: NSObject, MTKViewDelegate {
         try checkSourceClipping(output: output)
         let contrast = try checkFullScreenBlur(output: output)
         durations.sort()
-        return "GPU 검증 통과: 열린 화면 + 32도/30% 접힘의 블러 4단계(9개 출력) 구별. 제한 각도 보정 좌표 최대 오차 \(String(format: "%.2f", coordinateError))/255, 원본 밖 픽셀 가림 통과. 30% 기본 강도 RGB 평균 변화(0~255) 왼쪽 \(String(format: "%.2f", thirtyPercentDifference.left)) / 중앙 \(String(format: "%.2f", thirtyPercentDifference.middle)) / 오른쪽 \(String(format: "%.2f", thirtyPercentDifference.right)). 동일 보정·밝기 기준 격자 대비 감소 중앙 \(String(format: "%.1f", contrast.middle * 100))% / 양쪽 \(String(format: "%.1f", contrast.edge * 100))%. 1280×800, GPU 중앙값 \(String(format: "%.2f", durations[durations.count / 2]))ms, 최대 \(String(format: "%.2f", durations.max() ?? 0))ms."
+        return "GPU 검증 통과: 열린 화면 + 32도/30% 접힘의 블러 4단계(9개 출력) 구별. 30/25/20도 포함 제한 각도 보정 좌표 최대 오차 \(String(format: "%.2f", coordinateError))/255, 원본 밖 픽셀 가림 통과. 30% 기본 강도 RGB 평균 변화(0~255) 왼쪽 \(String(format: "%.2f", thirtyPercentDifference.left)) / 중앙 \(String(format: "%.2f", thirtyPercentDifference.middle)) / 오른쪽 \(String(format: "%.2f", thirtyPercentDifference.right)). 동일 보정·밝기 기준 격자 대비 감소 중앙 \(String(format: "%.1f", contrast.middle * 100))% / 양쪽 \(String(format: "%.1f", contrast.edge * 100))%. 4단계·4각도 하단 대비 감소 최대 \(String(format: "%.1f", contrast.maximumBottom * 100))%. 1280×800, GPU 중앙값 \(String(format: "%.2f", durations[durations.count / 2]))ms, 최대 \(String(format: "%.2f", durations.max() ?? 0))ms."
     }
 
     /// Validate the packaged illustration without reading the user's screen.
@@ -387,7 +387,7 @@ final class VeilRenderer: NSObject, MTKViewDelegate {
                         withBytes: pixels, bytesPerRow: width * 4)
         var maximumError = 0.0
         for start in [85.0, 90, 95, 100] {
-            for angle in [110.0, 89, 67.5, 50, 32, 15] {
+            for angle in [110.0, 89, 67.5, 50, 32, 30, 25, 20, 15] {
                 for level in 1...4 {
                     let p = VeilProjection(angle: angle, options: VeilOptions(startAngle: start, blurLevel: level))
                     guard let command = commandQueue.makeCommandBuffer() else { throw RendererFailure.allocation }
@@ -428,7 +428,7 @@ final class VeilRenderer: NSObject, MTKViewDelegate {
               let command = commandQueue.makeCommandBuffer() else { throw RendererFailure.allocation }
         texture.replace(region: MTLRegionMake2D(0, 0, width, height), mipmapLevel: 0,
                         withBytes: pixels, bytesPerRow: width * 4)
-        let p = VeilProjection(angle: 85, options: VeilOptions())
+        let p = VeilProjection(angle: 83, options: VeilOptions())
         try encode(source: texture, output: output, projection: p, command: command, applyBlur: false)
         command.commit(); command.waitUntilCompleted()
         guard command.status == .completed else { throw command.error ?? RendererFailure.unavailable }
@@ -436,9 +436,12 @@ final class VeilRenderer: NSObject, MTKViewDelegate {
                         from: MTLRegionMake2D(0, 0, width, height), mipmapLevel: 0)
         let y = height / 8
         for x in [1, width - 2] {
-            let source = p.sourcePoint(x: (Double(x) + 0.5) / Double(width),
-                                       y: (Double(y) + 0.5) / Double(height))
-            guard source.x < 0 || source.x > 1,
+            let panelX = (Double(x) + 0.5) / Double(width)
+            let panelY = (Double(y) + 0.5) / Double(height)
+            let source = p.sourcePoint(x: panelX, y: panelY)
+            let inset = p.sideInset * (1 - panelY) / (1 - p.topInset)
+            guard min(panelX - inset, 1 - inset - panelX) > 0,
+                  source.x < 0 || source.x > 1,
                   pixels[(y * width + x) * 4 + 2] == 0 else { throw RendererFailure.geometryMismatch }
         }
         guard pixels[(height / 2 * width + width / 2) * 4 + 2] > 200 else {
@@ -448,7 +451,7 @@ final class VeilRenderer: NSObject, MTKViewDelegate {
 
     /// Measure fine detail in the middle AND sides. Compare a sharp pass with
     /// the SAME warp/coverage/shade so resampling alone cannot count as blur.
-    private func checkFullScreenBlur(output: MTLTexture) throws -> (middle: Double, edge: Double) {
+    private func checkFullScreenBlur(output: MTLTexture) throws -> (middle: Double, edge: Double, maximumBottom: Double) {
         let width = output.width, height = output.height
         var pixels = [UInt8](repeating: 255, count: width * height * 4)
         for y in 0..<height {
@@ -464,37 +467,53 @@ final class VeilRenderer: NSObject, MTKViewDelegate {
         guard let texture = device.makeTexture(descriptor: descriptor) else { throw RendererFailure.allocation }
         texture.replace(region: MTLRegionMake2D(0, 0, width, height), mipmapLevel: 0,
                         withBytes: pixels, bytesPerRow: width * 4)
-        let p = VeilProjection(angle: 67.5, options: VeilOptions())
-        guard let referenceCommand = commandQueue.makeCommandBuffer() else { throw RendererFailure.allocation }
-        try encode(source: texture, output: output, projection: p, command: referenceCommand, applyBlur: false)
-        referenceCommand.commit(); referenceCommand.waitUntilCompleted()
-        guard referenceCommand.status == .completed else { throw referenceCommand.error ?? RendererFailure.unavailable }
-        var reference = pixels
-        output.getBytes(&reference, bytesPerRow: width * 4,
-                        from: MTLRegionMake2D(0, 0, width, height), mipmapLevel: 0)
-        guard let command = commandQueue.makeCommandBuffer() else { throw RendererFailure.allocation }
-        try encode(source: texture, output: output, projection: p, command: command)
-        command.commit(); command.waitUntilCompleted()
-        guard command.status == .completed else { throw command.error ?? RendererFailure.unavailable }
-        output.getBytes(&pixels, bytesPerRow: width * 4,
-                        from: MTLRegionMake2D(0, 0, width, height), mipmapLevel: 0)
-        func contrastLoss(_ lowerX: Double, _ upperX: Double) -> Double {
-            var sum = 0.0, referenceSum = 0.0
-            for y in height * 4 / 10..<height * 6 / 10 {
-                let gain = 1 - p.shadeAt(y: (Double(y) + 0.5) / Double(height))
-                for x in Int(Double(width) * lowerX)..<Int(Double(width) * upperX) {
-                    sum += abs(Double(pixels[(y * width + x) * 4 + 2]) / gain - 127.5)
-                    referenceSum += abs(Double(reference[(y * width + x) * 4 + 2]) / gain - 127.5)
+        var established = (middle: 0.0, edge: 0.0)
+        var maximumBottom = 0.0
+        for angle in [67.5, 32, 25, 20] {
+            for level in 1...4 {
+                let p = VeilProjection(angle: angle, options: VeilOptions(blurLevel: level))
+                guard let referenceCommand = commandQueue.makeCommandBuffer() else { throw RendererFailure.allocation }
+                try encode(source: texture, output: output, projection: p, command: referenceCommand, applyBlur: false)
+                referenceCommand.commit(); referenceCommand.waitUntilCompleted()
+                guard referenceCommand.status == .completed else { throw referenceCommand.error ?? RendererFailure.unavailable }
+                var reference = pixels
+                output.getBytes(&reference, bytesPerRow: width * 4,
+                                from: MTLRegionMake2D(0, 0, width, height), mipmapLevel: 0)
+                guard let command = commandQueue.makeCommandBuffer() else { throw RendererFailure.allocation }
+                try encode(source: texture, output: output, projection: p, command: command)
+                command.commit(); command.waitUntilCompleted()
+                guard command.status == .completed else { throw command.error ?? RendererFailure.unavailable }
+                output.getBytes(&pixels, bytesPerRow: width * 4,
+                                from: MTLRegionMake2D(0, 0, width, height), mipmapLevel: 0)
+                func contrastLoss(_ lowerX: Double, _ upperX: Double, _ lowerY: Double = 0.4, _ upperY: Double = 0.6) -> Double {
+                    var sum = 0.0, referenceSum = 0.0
+                    for y in Int(Double(height) * lowerY)..<Int(Double(height) * upperY) {
+                        let gain = 1 - p.shadeAt(y: (Double(y) + 0.5) / Double(height))
+                        for x in Int(Double(width) * lowerX)..<Int(Double(width) * upperX) {
+                            sum += abs(Double(pixels[(y * width + x) * 4 + 2]) / gain - 127.5)
+                            referenceSum += abs(Double(reference[(y * width + x) * 4 + 2]) / gain - 127.5)
+                        }
+                    }
+                    return 1 - sum / max(1, referenceSum)
+                }
+                let middle = contrastLoss(0.4, 0.6)
+                let left = contrastLoss(0.08, 0.14), right = contrastLoss(0.86, 0.92)
+                // Actual GPU detail at the hinge must remain markedly clearer
+                // at all four radii, including 20/25-degree deep-angle output.
+                let bottom = max(contrastLoss(0.4, 0.6, 0.94, 0.99),
+                                 max(contrastLoss(0.08, 0.14, 0.94, 0.99), contrastLoss(0.86, 0.92, 0.94, 0.99)))
+                guard bottom < 0.16, middle > bottom + 0.03,
+                      min(left, right) > bottom + 0.03 else { throw RendererFailure.weakEdges }
+                maximumBottom = max(maximumBottom, bottom)
+                if angle == 67.5 && level == 2 {
+                    // Preserve the established center/side haze above the fade.
+                    guard middle > 0.30, left > 0.50, right > 0.50,
+                          min(left, right) > middle + 0.15 else { throw RendererFailure.weakEdges }
+                    established = (middle, (left + right) / 2)
                 }
             }
-            return 1 - sum / max(1, referenceSum)
         }
-        let middle = contrastLoss(0.4, 0.6)
-        let left = contrastLoss(0.08, 0.14), right = contrastLoss(0.86, 0.92)
-        // The previous 0.1.5 center (~13% loss) must no longer pass.
-        guard middle > 0.30, left > 0.50, right > 0.50,
-              min(left, right) > middle + 0.15 else { throw RendererFailure.weakEdges }
-        return (middle, (left + right) / 2)
+        return (established.middle, established.edge, maximumBottom)
     }
 
     private static func makePreviewArtwork(device: MTLDevice) throws -> MTLTexture {

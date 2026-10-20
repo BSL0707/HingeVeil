@@ -73,14 +73,22 @@ struct SettingsView: View {
                         .foregroundStyle(controller.permission ? Color.green : Color.orange)
                     Spacer()
                     Button(t("화면 권한 요청")) { controller.requestPermission() }
-                        .disabled(controller.isReviewMode || !controller.permissionState.canRequest)
+                        .disabled(controller.isReviewMode || controller.recoveryInProgress || !controller.permissionState.canRequest)
                     Button(t("권한 다시 확인")) { controller.refreshPermission(announce: true) }
-                        .disabled(controller.isReviewMode || controller.permissionState.requestInFlight)
+                        .disabled(controller.isReviewMode || controller.recoveryInProgress || controller.permissionState.requestInFlight)
                     Button(t("설정 열기")) { controller.openPermissionSettings() }.disabled(controller.isReviewMode)
                 }
                 Text(m(controller.permissionState.guidance)).font(.caption).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
-                Button(t("권한·재시작 도움말")) { helpSheet = .permissions }
+                HStack {
+                    Button(t("권한 복구…")) { controller.requestPermissionRecovery() }
+                        .accessibilityLabel(t("권한 복구…"))
+                        .disabled(controller.isReviewMode || controller.recoveryInProgress || controller.permissionState.requestInFlight)
+                    Button(t("권한·재시작 도움말")) { helpSheet = .permissions }
+                }
+                if let notice = controller.recoveryNotice {
+                    Text(m(notice)).font(.caption).foregroundStyle(.orange).fixedSize(horizontal: false, vertical: true)
+                }
             }.padding(12).background(Color.secondary.opacity(0.08)).clipShape(RoundedRectangle(cornerRadius: 10))
             VeilPreview(angle: controller.previewAngle, options: controller.options)
                 .frame(width: 480, height: 300)
@@ -115,13 +123,13 @@ struct SettingsView: View {
                 }
                 Spacer()
                 Toggle(t("실제 덮개 효과"), isOn: Binding(get: { controller.enabled }, set: { controller.setEnabled($0) }))
-                    .toggleStyle(.switch).disabled(controller.isReviewMode)
+                    .toggleStyle(.switch).disabled(controller.isReviewMode || controller.recoveryInProgress)
             }
             Text(m(controller.status)).font(.callout).foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
             HStack {
                 Button(t("30% 접힘 테스트 · 2초")) { controller.runTest() }
-                    .accessibilityLabel(t("30% 접힘 테스트 · 2초")).disabled(controller.isReviewMode)
+                    .accessibilityLabel(t("30% 접힘 테스트 · 2초")).disabled(controller.isReviewMode || controller.recoveryInProgress)
                 Spacer()
                 Button(t("사용 설명서")) { helpSheet = .manual }.accessibilityLabel(t("사용 설명서"))
             }
@@ -143,10 +151,8 @@ struct SettingsView: View {
                             Text(t("1. 설정에서 HingeVeil만 허용한 뒤 앱으로 돌아와 ‘권한 다시 확인’을 누르세요. 앱은 돌아올 때도 권한을 다시 읽으며 같은 실행 중에 시스템 요청을 반복하지 않습니다."))
                             Text(t("2. 허용했는데도 미확인이면 ‘앱 종료’를 누르고 응용 프로그램 폴더의 HingeVeil을 다시 여세요. macOS가 ‘종료 및 다시 열기’를 제공하면 사용하세요. 다시 허용해도 정상 적용을 보장할 수는 없습니다."))
                             Text(t("3. 구버전에서 업데이트했다면 임시 서명이 달라 기존 허용 기록과 충돌할 수 있습니다. 다른 복사본과 덮개 효과 앱을 종료하고 응용 프로그램에 한 버전만 두세요. 동일한 DMG를 다시 받는 것만으로 서명은 바뀌지 않습니다."))
-                            Text(t("4. 재시작 후에도 계속되면 앱을 종료하고, 본인이 원할 때만 터미널에서 아래 명령으로 HingeVeil의 화면 권한만 초기화하세요. 다른 앱이나 모든 권한을 초기화하지 마세요."))
-                            Text("tccutil reset ScreenCapture com.bsl0707.hingeveil.preview")
-                                .font(.system(.caption, design: .monospaced)).textSelection(.enabled)
-                            Text(t("그 뒤 같은 앱을 다시 열어 ‘화면 권한 요청’을 한 번 누르고 직접 허용하세요. 이 앱은 초기화 명령을 자동 실행하지 않습니다. Gatekeeper·SIP를 끄거나 격리 속성을 지우지 마세요."))
+                            Text(t("4. 계속 미확인이면 ‘권한 복구…’를 누르고 확인창의 범위를 읽은 뒤 동의하세요. 앱이 종료된 뒤 HingeVeil의 화면 권한만 초기화하고 같은 앱을 다시 엽니다. 터미널은 필요하지 않습니다."))
+                            Text(t("복구 후에도 시스템 허용은 직접 눌러야 합니다. 앱은 권한을 자동 허용하거나 복구를 자동 반복하지 않습니다. Gatekeeper·SIP를 끄거나 격리 속성을 지우지 마세요."))
                         }.frame(maxWidth: .infinity, alignment: .leading).textSelection(.enabled)
                     }
                 }

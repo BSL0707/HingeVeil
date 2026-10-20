@@ -58,7 +58,10 @@ fragment float4 veilComposite(ScreenVertex in [[stage_in]],
     // Preserve central haze and the outer edge blend. The four levels still
     // control Gaussian radius, not geometry.
     float middleMix = edgeMix * (0.45 + 0.35 * motion + 0.12 * frontWeight);
-    float blurMix = mix(middleMix, edgeMix, sideWeight);
+    // Keep the lower hinge readable, rather than letting the focus front
+    // blanket the entire bottom. Match the CPU reference continuously.
+    float hingeClarity = 1 - 0.92 * smoothstep(0.72, 0.98, in.uv.y);
+    float blurMix = mix(middleMix, edgeMix, sideWeight) * hingeClarity;
     float3 sharp = original.sample(linearFilter, uv).rgb;
     float3 soft = softened.sample(linearFilter, uv).rgb;
     float shade = p.appearance.y * (0.5 + 0.9 * hingeDistance);

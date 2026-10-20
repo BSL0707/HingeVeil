@@ -11,10 +11,12 @@ final class VeilAppDelegate: NSObject, NSApplicationDelegate {
     private let reviewLanguage: AppLanguage?
     private let reviewManual: Bool
     private let reviewPermissions: Bool
+    private let reviewRecovery: Bool
 
-    init(reviewLanguage: AppLanguage? = nil, reviewManual: Bool = false, reviewPermissions: Bool = false) {
+    init(reviewLanguage: AppLanguage? = nil, reviewManual: Bool = false, reviewPermissions: Bool = false, reviewRecovery: Bool = false) {
         self.reviewLanguage = reviewLanguage; self.reviewManual = reviewManual
         self.reviewPermissions = reviewPermissions
+        self.reviewRecovery = reviewRecovery
         super.init()
     }
 
@@ -40,6 +42,7 @@ final class VeilAppDelegate: NSObject, NSApplicationDelegate {
         refreshLanguage()
         controller.start()
         showSettings()
+        if reviewRecovery { controller.requestPermissionRecovery() }
     }
 
     private func refreshLanguage() {
@@ -80,6 +83,18 @@ if arguments.count >= 3 && arguments[1] == "--watch-parent", let pid = Int32(arg
         && !L10n.manual(language: .english).isEmpty && !L10n.manual(language: .korean).isEmpty
     print("Localization resources: en=\(en.count), ko=\(ko.count), passed=\(passed)")
     exit(passed ? 0 : 1)
+} else if arguments.contains("--check-permission-recovery") || arguments.contains("--check-recovery-cancel") {
+    do {
+        let session = try PermissionRecoveryLauncher.prepare(fixture: true)
+        if arguments.contains("--check-recovery-cancel") {
+            let cancelled = session.cancel()
+            print("Recovery cancel fixture: passed=\(cancelled); NO OS permission changes")
+            exit(cancelled ? 0 : 1)
+        }
+        try session.commit()
+        print("Recovery parent fixture: handshake accepted; exiting before mock reset. NO OS permission changes")
+        exit(0)
+    } catch { fputs("Recovery process fixture failed: \(error)\n", stderr); exit(1) }
 } else if arguments.contains("--review-ui") {
     MainActor.assumeIsolated {
         let language: AppLanguage
@@ -88,7 +103,7 @@ if arguments.count >= 3 && arguments[1] == "--watch-parent", let pid = Int32(arg
         } else { language = .english }
         let application = NSApplication.shared
         let delegate = VeilAppDelegate(reviewLanguage: language, reviewManual: arguments.contains("--review-manual"),
-                                       reviewPermissions: arguments.contains("--review-permissions"))
+                                       reviewPermissions: arguments.contains("--review-permissions"), reviewRecovery: arguments.contains("--review-recovery"))
         application.delegate = delegate
         // Inspection only: no capture, sensor, watchdog, hotkey or preference writes.
         // Independent of a modal sheet/menu run-loop mode. This fixture starts

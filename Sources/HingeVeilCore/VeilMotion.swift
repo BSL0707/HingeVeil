@@ -26,7 +26,8 @@ public struct VeilProjection: Equatable {
     public let counterDepth: Double
 
     public init(angle: Double, options: VeilOptions) {
-        let p = angle.isFinite ? min(1, max(0, (options.startAngle - angle) / (options.startAngle - 15))) : 0
+        let range = options.startAngle - 15
+        let p = angle.isFinite ? min(1, max(0, (options.startAngle - angle) / range)) : 0
         amount = p
         motion = p * p * (3 - 2 * p)
         // At most 9% of the top width and 2.5% of the height are masked,
@@ -37,13 +38,19 @@ public struct VeilProjection: Equatable {
         blurPixels = [12.0, 24, 36, 52][options.blurLevel - 1] * p
         feather = motion * (0.008 + Double(options.blurLevel) * 0.006)
         shade = 0.16 * p * p
-        // Spread bounded compensation across the whole angle range. The old
-        // exponential reached ~99% near the middle, effectively freezing the
-        // content while aperture/blur continued. Ease the first four degrees,
-        // then ease out only at the closed end.
-        let closedDegrees = p * (options.startAngle - 15)
-        let easedAmount = p * Self.smoothstep(0, 4, closedDegrees)
-        let compensation = easedAmount * (2 - easedAmount)
+        // Keep meaningful content motion through 30 -> 25 -> 20 degrees.
+        // The former 2p-p² had spent 96% of its range by 30 degrees at the
+        // default start. Reserve more travel for deep angles without adding
+        // zoom. Preserve the first four-degree onset and ease to a zero slope
+        // only in the last five degrees before the existing 15-degree limit.
+        let closedDegrees = p * range
+        var easedAmount = p * Self.smoothstep(0, 4, closedDegrees)
+        let endEaseStart = 1 - 5 / range
+        if p > endEaseStart {
+            let t = (p - endEaseStart) / (1 - endEaseStart)
+            easedAmount = endEaseStart + (1 - endEaseStart) * (t + t * t - t * t * t)
+        }
+        let compensation = easedAmount * (1.5 - 0.5 * easedAmount)
         // Preserve the 1.12 vertical gain cap and no horizontal enlargement.
         // No fit-to-box scale; out-of-source pixels must still be masked.
         let compressionLimit = 1 - 1 / 1.12
@@ -73,7 +80,11 @@ public struct VeilProjection: Equatable {
         // Use the same smooth onset as the sides, but retain an edge-to-center
         // gradient. At 30% closure the center is ~35%, rather than ~13%.
         let middleMix = edgeMix * (0.45 + 0.35 * motion + 0.12 * frontWeight)
-        return middleMix + (edgeMix - middleMix) * sideWeight
+        // Preserve established middle/side haze above 72% of the panel.
+        // Fade the lowest band smoothly; only 8% of that mix remains at the
+        // hinge, including the corners. This is not a change to the four radii.
+        let hingeClarity = 1 - 0.92 * Self.smoothstep(0.72, 0.98, y)
+        return (middleMix + (edgeMix - middleMix) * sideWeight) * hingeClarity
     }
 
     public func shadeAt(y: Double) -> Double {

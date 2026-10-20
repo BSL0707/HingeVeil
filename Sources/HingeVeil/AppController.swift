@@ -17,6 +17,8 @@ final class AppController: ObservableObject {
     var onLanguageChange: (() -> Void)?
     @Published private(set) var angle: Double?
     @Published private(set) var permissionState = ScreenPermissionState()
+    @Published private(set) var recoveryInProgress = false
+    @Published private(set) var recoveryNotice: AppText?
     var permission: Bool { permissionState.isGranted }
     @Published var startAngle: Double {
         didSet {
@@ -105,11 +107,12 @@ final class AppController: ObservableObject {
         } else if permission {
             status = "화면 권한이 확인됐습니다. ‘실제 덮개 효과’를 켜세요."
         }
+        consumePermissionRecovery()
     }
 
     @discardableResult
     func refreshPermission(announce: Bool = false) -> Bool {
-        guard !isReviewMode, !permissionState.requestInFlight else { return permission }
+        guard !isReviewMode, !recoveryInProgress, !permissionState.requestInFlight else { return permission }
         lastPermissionCheck = ProcessInfo.processInfo.systemUptime
         let previouslyGranted = permission
         var next = permissionState
@@ -129,7 +132,7 @@ final class AppController: ObservableObject {
     }
 
     func requestPermission() {
-        guard !isReviewMode else { return }
+        guard !isReviewMode, !recoveryInProgress else { return }
         if refreshPermission(announce: true) { return }
         guard permissionState.beginRequest() else { status = permissionState.guidance; return }
         let granted = CGRequestScreenCaptureAccess()
@@ -152,8 +155,59 @@ final class AppController: ObservableObject {
         if alert.runModal() == .alertFirstButtonReturn { NSApp.terminate(nil) }
     }
 
+    func requestPermissionRecovery() {
+        guard !recoveryInProgress else { return }
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = L10n.text("화면 녹화 권한 복구", language: language)
+        alert.informativeText = L10n.text("HingeVeil의 화면 녹화 허용 기록만 초기화하고 이 앱을 종료·다시 엽니다. 기존 허용도 해제됩니다. 다른 앱·마이크·접근성 권한은 바꾸지 않습니다. 재실행 후 시스템 허용은 직접 눌러야 합니다. 임시 서명 문제의 영구 해결은 아닙니다.", language: language)
+        if isReviewMode { alert.informativeText += "\n\n" + L10n.text("UI 검토 모드: 버튼을 눌러도 권한 초기화나 앱 재시작은 하지 않습니다.", language: language) }
+        let resetButton = alert.addButton(withTitle: L10n.text("복구 후 다시 열기", language: language))
+        resetButton.hasDestructiveAction = true
+        resetButton.keyEquivalent = ""
+        alert.addButton(withTitle: L10n.text("취소", language: language)).keyEquivalent = "\r"
+        guard alert.runModal() == .alertFirstButtonReturn, !isReviewMode else { return }
+        recoveryInProgress = true
+        setEnabled(false)
+        status = "권한 복구 준비 중입니다. 앱이 다시 열린 뒤 직접 허용하세요."
+        Task { [weak self] in
+            guard let self else { return }
+            await capture.stop()
+            do {
+                let session = try await Task.detached(priority: .userInitiated) {
+                    try PermissionRecoveryLauncher.prepare()
+                }.value
+                UserDefaults.standard.set(session.request.nonce, forKey: PermissionRecovery.pendingKey)
+                guard UserDefaults.standard.synchronize() else { _ = session.cancel(); throw PermissionRecoveryLauncher.Failure.helper }
+                try session.commit()
+                NSApp.terminate(nil)
+            } catch {
+                UserDefaults.standard.removeObject(forKey: PermissionRecovery.pendingKey)
+                recoveryInProgress = false
+                if let failure = error as? PermissionRecoveryLauncher.Failure, failure == .location {
+                    recoveryNotice = "권한 복구는 응용 프로그램 폴더에 설치한 HingeVeil에서만 사용할 수 있습니다. DMG를 추출하고 설치한 앱을 다시 여세요."
+                } else { recoveryNotice = "복구 준비에 실패해 권한을 초기화하지 않았습니다. 도움말을 확인하거나 오류를 제보하세요." }
+                status = recoveryNotice ?? "효과가 꺼져 있습니다."
+            }
+        }
+    }
+
+    private func consumePermissionRecovery() {
+        guard !isReviewMode, let nonce = UserDefaults.standard.string(forKey: PermissionRecovery.pendingKey) else { return }
+        UserDefaults.standard.removeObject(forKey: PermissionRecovery.pendingKey)
+        let receipt = (try? PermissionRecovery.supportDirectory()).flatMap {
+            PermissionRecovery.consume(nonce: nonce, directory: $0)
+        }
+        if let receipt, receipt.resetExitCode == 0 {
+            recoveryNotice = "화면 권한 복구를 마쳤습니다. ‘화면 권한 요청’을 한 번 누르고 설정에서 HingeVeil을 직접 허용하세요. 허용 후 권한을 다시 확인하고 실제 효과를 켜세요."
+        } else {
+            recoveryNotice = "권한 복구 결과를 확인하지 못했거나 초기화에 실패했습니다. 자동으로 반복하지 않습니다. 도움말을 확인하거나 오류를 제보하세요."
+        }
+        status = recoveryNotice ?? "효과가 꺼져 있습니다."
+    }
+
     func setEnabled(_ value: Bool) {
-        guard !isReviewMode else { return }
+        guard !isReviewMode, !value || !recoveryInProgress else { return }
         if !value {
             UserDefaults.standard.set(false, forKey: "effectEnabled")
             enabled = false
@@ -178,7 +232,7 @@ final class AppController: ObservableObject {
     }
 
     func runTest() {
-        guard !isReviewMode else { return }
+        guard !isReviewMode, !recoveryInProgress else { return }
         guard safetyReady else { status = "안전 종료 기능을 먼저 확인해주세요."; return }
         guard refreshPermission(announce: true) else { return }
         sensor.setFast(true)

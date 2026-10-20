@@ -124,7 +124,7 @@ final class CoreTests: XCTestCase {
             let deep = projection(0.8)
             let deeper = projection(0.9)
             let end = projection(1)
-            XCTAssertEqual(middle.counterCompression / end.counterCompression, 0.75, accuracy: 1e-12)
+            XCTAssertEqual(middle.counterCompression / end.counterCompression, 0.625, accuracy: 1e-12)
             // The former exponential had exhausted nearly all compensation
             // here. Require measurable content motion, not just edge changes.
             for y in [0.0, 0.5] {
@@ -205,7 +205,7 @@ final class CoreTests: XCTestCase {
             for angle in [110.0, 89, 67.5, 50, 32, 15] {
                 let q = VeilProjection(angle: angle, options: VeilOptions(blurLevel: level))
                 let unchangedEdge = 1 - pow(1 - q.amount, 3)
-                for y in [0.0, 0.25, 0.5, 0.75, 1] {
+                for y in [0.0, 0.25, 0.5, 0.7, 0.72] {
                     XCTAssertEqual(q.blurMix(x: 0, y: y), unchangedEdge, accuracy: 1e-12)
                     XCTAssertEqual(q.blurMix(x: 1, y: y), unchangedEdge, accuracy: 1e-12)
                     XCTAssertLessThanOrEqual(q.blurMix(x: 0.5, y: y), unchangedEdge)

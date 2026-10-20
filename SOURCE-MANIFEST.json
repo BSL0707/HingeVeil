@@ -1,5 +1,5 @@
 {
-  "status": "source snapshot for 0.1.12; release availability is documented in README",
+  "status": "HingeVeil 0.1.14 public development preview source; see tagged release for publication status",
   "license": "MIT_selected_by_owner_rights_review_not_certified",
   "files": [
     {
@@ -49,8 +49,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 1918,
-      "sha256": "ebab37c958f040e77e3523d1d1c8684d4ac4acf7caf4127bb611a9cc1dba5060"
+      "bytes": 4464,
+      "sha256": "95c1a74941bda1dbde9404c9a7bcd60e2218aecc7ca33ffb9d3a26e68672c6f3"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -60,7 +60,7 @@
     {
       "path": "Docs/Download.svg",
       "bytes": 830,
-      "sha256": "aaa6b1e1a959630342963a0b18d936f876971a8655344ca7c46b280d4c0eba3a"
+      "sha256": "b33c7d490c885e2c04c82f6b89c3a47d89ceda61454d1c59e4ae1fbd2ae0fc48"
     },
     {
       "path": "Docs/GitHubUpload.en.md",
@@ -74,23 +74,23 @@
     },
     {
       "path": "Docs/Manual.en.md",
-      "bytes": 7625,
-      "sha256": "c0dfcc8d24aed89346e607935ed4f2f4c6fededc2916c6a25387dac0b51de6ce"
+      "bytes": 9492,
+      "sha256": "4c05503ad8a565033c93cfae9ffce832806d284c0e8a37e41aa21c06eb366d95"
     },
     {
       "path": "Docs/Manual.ko.md",
-      "bytes": 8805,
-      "sha256": "0174f01f604ab89176e0aaf2005dbe2d5bd136fee71ebfc805d37b303afecbe9"
+      "bytes": 11068,
+      "sha256": "2690e35f69b125c0f4641e91a625114e9243253cd5ef52f9de86a94336171a9b"
     },
     {
       "path": "Docs/Permissions.en.md",
-      "bytes": 3282,
-      "sha256": "dccf800422d0a69850b99094b4e9d7e56a626f17c8a606e5e752469fc8ccc7ab"
+      "bytes": 4264,
+      "sha256": "132d5c73c686f54abe22c1b80809f5197de23bba16a06da6c6b0f536c81942bd"
     },
     {
       "path": "Docs/Permissions.ko.md",
-      "bytes": 3982,
-      "sha256": "88fc58d8d4b86212a56383961ca377661e47e5723945e83e97404cb74fcd230d"
+      "bytes": 4995,
+      "sha256": "a3b1abb40e3d62cb13a102e3acd31ca388b891f89215391ac03201f415532bd0"
     },
     {
       "path": "Docs/PublicationReview.md",
@@ -105,7 +105,7 @@
     {
       "path": "Info.plist",
       "bytes": 1227,
-      "sha256": "4116a602ed36a632b9750a480ad5e3eb2e79f4b029c4c4fe3b75966ce5686ebf"
+      "sha256": "0b289b4aa7a055a1309ff46836e098e0531635e11204c8cfc405ece76ccb7fac"
     },
     {
       "path": "LICENSE",
@@ -124,33 +124,33 @@
     },
     {
       "path": "Package.swift",
-      "bytes": 601,
-      "sha256": "ebb3d6a82d36cf3d562a677510cc7918d770f250c0d09368adcf0dfcc1cbb7c4"
+      "bytes": 775,
+      "sha256": "bb07e7232a6b2e46b0410164759ade2d20f38f43a0600392216738e4a66ef428"
     },
     {
       "path": "README.ko.md",
-      "bytes": 7925,
-      "sha256": "b7ab28cf4d9465834bea8e33942ec1e5f79e27b1ecdb136b6a94e175fc4e790e"
+      "bytes": 8576,
+      "sha256": "35b842ab69951b3a8c8bb356b7a6fb276d85b8d2fd2e5df7e0599a9b735850b9"
     },
     {
       "path": "README.md",
-      "bytes": 8644,
-      "sha256": "e21a998b270ec10d6675e5f267bf2ca4ceba1269036ff8a82cfbc74895eace58"
+      "bytes": 9146,
+      "sha256": "b57d15ebc5decd355cd856e2ea3bee82dc523b39ad9ea113bb4deb237dcf4e00"
     },
     {
       "path": "SECURITY.md",
-      "bytes": 4341,
-      "sha256": "c087cdc8f96800cc687b22b6fc89fc62e58345fb89577e028ce36e085dad25a2"
+      "bytes": 6388,
+      "sha256": "fbb3af0ee99021b39dd5adc0461572450e4d3b707de02f5ebcaad928e4c9a99c"
     },
     {
       "path": "Sources/HingeVeil/AppController.swift",
-      "bytes": 17091,
-      "sha256": "982883ae9d25e8f64968c33cbbe40ab6d0a91a7e3ea552e9558dfeae6a44bd36"
+      "bytes": 21052,
+      "sha256": "a260498ee6abb7f9911739847df413099bb5485d7fa918ca991709d4c94aec3d"
     },
     {
       "path": "Sources/HingeVeil/DesktopCapture.swift",
-      "bytes": 5588,
-      "sha256": "736a1c504ba30c23bd2aec20fdf7321e35b3d1004cdbbed94e769242c6fe95ed"
+      "bytes": 5818,
+      "sha256": "656a15ad27bfc5414c0e585697c755d46536c908c54aba129ad09fa72b2f1f17"
     },
     {
       "path": "Sources/HingeVeil/EffectWindow.swift",
@@ -168,14 +168,19 @@
       "sha256": "c4b21f07af8f3bf2434b11218ad6987d92034013a2f52ec4da41364a611cf2f7"
     },
     {
+      "path": "Sources/HingeVeil/PermissionRecoveryLauncher.swift",
+      "bytes": 4097,
+      "sha256": "2fd88457924e06c6ae7f481a6d744cf9fd283226ec497bf3bcb63d988c904a45"
+    },
+    {
       "path": "Sources/HingeVeil/Resources/PreviewTiger.png",
       "bytes": 2615421,
       "sha256": "0256ec5af53df27b820d3b774ddc73512e51e0c78d092c4faabd3f04be66d416"
     },
     {
       "path": "Sources/HingeVeil/Resources/Veil.metal",
-      "bytes": 5046,
-      "sha256": "015ca1f872adc55ad2799020fbe5323f0266d67fa1bea6963d73eada9f94887a"
+      "bytes": 5276,
+      "sha256": "7dda69f9e8568159457a2a1dbe07ee44ba3cb4784360f9c5fb44938015b4cf26"
     },
     {
       "path": "Sources/HingeVeil/SafetyGuard.swift",
@@ -184,13 +189,13 @@
     },
     {
       "path": "Sources/HingeVeil/SettingsView.swift",
-      "bytes": 10248,
-      "sha256": "2a3e093e7e32f7504f969fc6a4e66fa80940216f1f2b6e7b9f18c76ea9eb2f4c"
+      "bytes": 10728,
+      "sha256": "72d03601da3a62578350d1b6f1185fe46ed82d375a8f2599bbb2eb3ed488d0de"
     },
     {
       "path": "Sources/HingeVeil/VeilRenderer.swift",
-      "bytes": 34075,
-      "sha256": "a16c9503de92a335ebc4e182283c27eb4b6170324c35432d6153f02b71530fc8"
+      "bytes": 35627,
+      "sha256": "b584df6307434a1a6892a32951070b76ecdf71178b38b3df0dfdb870cb00860a"
     },
     {
       "path": "Sources/HingeVeil/WindowCheck.swift",
@@ -199,8 +204,8 @@
     },
     {
       "path": "Sources/HingeVeil/main.swift",
-      "bytes": 8622,
-      "sha256": "ca85e123738ad9ec333dec4286e9edc19d45ca289c9ee47a43bea40bdae3de11"
+      "bytes": 9543,
+      "sha256": "55ead2388fab0f147150804085b0b4af221614ce19a91753458fa3b6a5739048"
     },
     {
       "path": "Sources/HingeVeilCore/EffectGate.swift",
@@ -213,14 +218,19 @@
       "sha256": "e7885adb38ddfc29614acf2eacd6ff7b29d808f913abf458f7c81a0a3baf9289"
     },
     {
+      "path": "Sources/HingeVeilCore/PermissionRecovery.swift",
+      "bytes": 6163,
+      "sha256": "7a8ce4201408c3f51a93e449bfbdb92aba74c3cdcfc8b1f62f6e93cd3769d97b"
+    },
+    {
       "path": "Sources/HingeVeilCore/Resources/Manual.en.txt",
-      "bytes": 7625,
-      "sha256": "c0dfcc8d24aed89346e607935ed4f2f4c6fededc2916c6a25387dac0b51de6ce"
+      "bytes": 9492,
+      "sha256": "4c05503ad8a565033c93cfae9ffce832806d284c0e8a37e41aa21c06eb366d95"
     },
     {
       "path": "Sources/HingeVeilCore/Resources/Manual.ko.txt",
-      "bytes": 8805,
-      "sha256": "0174f01f604ab89176e0aaf2005dbe2d5bd136fee71ebfc805d37b303afecbe9"
+      "bytes": 11068,
+      "sha256": "2690e35f69b125c0f4641e91a625114e9243253cd5ef52f9de86a94336171a9b"
     },
     {
       "path": "Sources/HingeVeilCore/Resources/en.lproj/InfoPlist.strings",
@@ -229,8 +239,8 @@
     },
     {
       "path": "Sources/HingeVeilCore/Resources/en.lproj/Localizable.strings",
-      "bytes": 11495,
-      "sha256": "5d333af6d05dfc9dd9631b52929f5774f0bb3d56062c284028aa938ce59c6d23"
+      "bytes": 14701,
+      "sha256": "e8c7b86be46a010715e8495662ed934e446260e634cdf53010d1a8145f468117"
     },
     {
       "path": "Sources/HingeVeilCore/Resources/ko.lproj/InfoPlist.strings",
@@ -239,8 +249,8 @@
     },
     {
       "path": "Sources/HingeVeilCore/Resources/ko.lproj/Localizable.strings",
-      "bytes": 12694,
-      "sha256": "15a4bf981ae1ae5ffd5a91ef5f3b9918e6ab6b49fcf5a7b9f6cb234126c04aaf"
+      "bytes": 16234,
+      "sha256": "89026d97e582001fba9557a0e937287468e5ce57652058938837050bf73194fb"
     },
     {
       "path": "Sources/HingeVeilCore/ScreenPermissionState.swift",
@@ -249,18 +259,33 @@
     },
     {
       "path": "Sources/HingeVeilCore/VeilMotion.swift",
-      "bytes": 5707,
-      "sha256": "62b9e722361b206ade5326c1bfe243ef9350573660abaa9313583381de6ee69c"
+      "bytes": 6365,
+      "sha256": "1c80ea8bb777229c2c310f17ae031f9d5925006da2b09015dc1cd6a99538bb42"
+    },
+    {
+      "path": "Sources/HingeVeilRecovery/main.swift",
+      "bytes": 4952,
+      "sha256": "013ea8224aca323a2287304dac889b68c359e3a17b60024fd3a793961b8c0887"
     },
     {
       "path": "Tests/HingeVeilCoreTests/CoreTests.swift",
-      "bytes": 18467,
-      "sha256": "f28abff2d6c4a0bd19d11cc74932eba61211b3e25407bb1350847fb657ce9e66"
+      "bytes": 18470,
+      "sha256": "db53e70a7edf7e528a4953832433a36c0af811816557984a6b0abcf34aca73a0"
     },
     {
       "path": "Tests/HingeVeilCoreTests/LocalizationTests.swift",
-      "bytes": 3286,
-      "sha256": "b047f503d8a624cb26c725920f2bc13cd134da282a882d0e8b53970a9613353e"
+      "bytes": 3365,
+      "sha256": "2a364d1677c050e9758c39d32a5840aa6551dd0ee15d0d6921c1562a92d3d8c4"
+    },
+    {
+      "path": "Tests/HingeVeilCoreTests/MotionRefinementTests.swift",
+      "bytes": 3623,
+      "sha256": "06eea917655392d51763acc7a2b9837919a9f26a324023c4b3fd531d7e3841b8"
+    },
+    {
+      "path": "Tests/HingeVeilCoreTests/PermissionRecoveryTests.swift",
+      "bytes": 7025,
+      "sha256": "083fb9ab8d9f536cf2d89b8880ebff3dba7e62f069e8b73e66e4737e8e0e37c3"
     },
     {
       "path": "Tests/HingeVeilCoreTests/ScreenPermissionTests.swift",
@@ -269,8 +294,8 @@
     },
     {
       "path": "build.sh",
-      "bytes": 2349,
-      "sha256": "f839ab9d8351e1d641db1487396997d3a9bf6c75f516603dbf9c3878cddc4d88"
+      "bytes": 2599,
+      "sha256": "e17e1c564d413f92d89ed0220b61c3e309eb14a47624984558f6057100238701"
     },
     {
       "path": "scripts/audit_publication.py",
@@ -283,14 +308,19 @@
       "sha256": "cf992a94873db39383027d1e033138e056637cf693cade631bb2f3a256d8c24d"
     },
     {
+      "path": "scripts/check_recovery_fixture.py",
+      "bytes": 1587,
+      "sha256": "2ecf0bea87f8cf6c79ff9178d04f917e784d285060d8b22c3957ea046ecb3770"
+    },
+    {
       "path": "scripts/check_source.py",
       "bytes": 2502,
       "sha256": "7d66fb824aa553764b85aabd2f76f7609339b90cc254888afd17a441b306c6d0"
     },
     {
       "path": "scripts/ci.sh",
-      "bytes": 489,
-      "sha256": "3e9001ac28f76c0ee3ff38e1ddf651f1e7a154eb118b5e37d6314bd579a1c2be"
+      "bytes": 531,
+      "sha256": "4bc0e565f804ce6c025919f038abd4162027b06b76b0f19dc19587172f6f4ebe"
     },
     {
       "path": "scripts/export_source.py",
@@ -303,14 +333,19 @@
       "sha256": "9ee9b851a906ceca533e6f55aaa7d41a9643b4c7442741cbcbefd98bc7aed0ea"
     },
     {
+      "path": "scripts/test_cursor_contract.py",
+      "bytes": 771,
+      "sha256": "b47f643a2358022a6dc8b921cbd03fcbbe782440baf8b25c8a6583fcb2076bcf"
+    },
+    {
       "path": "scripts/test_git_history.py",
       "bytes": 4041,
       "sha256": "72765583036f4d43fc840b273174b30fa399ac6c564b9bd02e02c663c97bf611"
     },
     {
       "path": "scripts/test_permission_contract.py",
-      "bytes": 2130,
-      "sha256": "ab2776fe9bd52d15f557071a76235b85cf7f5c12efae1e741d7ac68755cb3370"
+      "bytes": 3874,
+      "sha256": "4da1d9681f07653ee1de70e3a45dc89527b64b52377e39a74dcc62403bdfac1a"
     },
     {
       "path": "scripts/test_source_export.py",

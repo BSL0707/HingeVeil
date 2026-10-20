@@ -1,8 +1,8 @@
 # HingeVeil
 
-[![Download for macOS — 설치파일 다운로드 · v0.1.12 · Apple Silicon](Docs/Download.svg)](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.12/HingeVeil-0.1.12-AppleSilicon.dmg)
+[![Download for macOS — 설치파일 다운로드 · v0.1.14 · Apple Silicon](Docs/Download.svg)](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.14/HingeVeil-0.1.14-AppleSilicon.dmg)
 
-[한국어 설치 안내](#한국어-설치방법) · [English installation](#english-installation) · [Release & SHA-256](https://github.com/BSL0707/HingeVeil/releases/tag/v0.1.12)
+[한국어 설치 안내](#한국어-설치방법) · [English installation](#english-installation) · [Release & SHA-256](https://github.com/BSL0707/HingeVeil/releases/tag/v0.1.14)
 
 macOS 14+ · Apple Silicon (arm64) · **Public development preview / 공개 개발 미리보기**
 
@@ -16,9 +16,9 @@ Requires a supported built-in MacBook lid sensor and built-in display; not every
 
 **Apple Developer ID 서명·공증이 없는 임시 서명 개발판입니다.** macOS가 실행을 차단할 수 있습니다. 출처와 파일을 확인해 본인이 신뢰하는 경우에만 시스템의 앱별 **확인 없이 열기**를 사용하세요. Gatekeeper·SIP를 끄거나 격리 속성을 지우지 마세요. [Apple 안내](https://support.apple.com/ko-kr/102445)
 
-[설치·권한·탈출 상세 안내 (한글)](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.12/Install.ko.txt) · [한글 사용설명서](Docs/Manual.ko.md)
+[설치·권한·탈출 상세 안내 (한글)](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.14/Install.ko.txt) · [한글 사용설명서](Docs/Manual.ko.md)
 
-**이미 허용했는데 계속 미확인인가요?** 앱의 **권한·재시작 도움말** 또는 [구버전 권한 복구 안내](Docs/Permissions.ko.md)를 보세요. 이 업데이트는 상태 갱신·중복 요청·안내를 개선하며, 임시 서명 충돌을 자동·영구 해결하지는 않습니다.
+**이미 허용했는데 계속 미확인인가요?** 재확인·재시작 후에도 안 되면 앱의 **권한 복구…**를 사용하세요. 확인창 동의 후 이 앱의 화면 허용만 초기화하고 다시 엽니다. 시스템 허용은 직접 해야 합니다. **권한·재시작 도움말** 또는 [구버전 권한 복구 안내](Docs/Permissions.ko.md)를 보세요. 임시 서명 충돌을 영구 해결하는 것은 아닙니다.
 
 ## English installation
 
@@ -28,9 +28,9 @@ Requires a supported built-in MacBook lid sensor and built-in display; not every
 
 **Ad-hoc signed; NOT Developer ID signed or Apple notarized.** macOS may block launch. Only use the system's per-app **Open Anyway** option if you have checked and trust this build. Do not disable Gatekeeper/SIP or remove quarantine attributes. [Apple guidance](https://support.apple.com/en-us/102445)
 
-[Detailed installation, permissions & escape guide (English)](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.12/Install.en.txt) · [English user manual](Docs/Manual.en.md)
+[Detailed installation, permissions & escape guide (English)](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.14/Install.en.txt) · [English user manual](Docs/Manual.en.md)
 
-**Already allowed but still unconfirmed?** Use **Permission & Restart Help** in the app or the [older-build recovery guide](Docs/Permissions.en.md). This update improves rechecks, request suppression and guidance; it does not automatically or permanently repair ad-hoc signature conflicts.
+**Already allowed but still unconfirmed?** If rechecking and restarting fail, use **Recover Permission…** in the app. After confirmation it clears only this app’s screen approval and reopens. You must still approve access yourself. See **Permission & Restart Help** or the [older-build recovery guide](Docs/Permissions.en.md). This is not a permanent fix for ad-hoc signature conflicts.
 
 Emergency / 긴급 탈출: click the effect / 효과 화면 클릭, or **Control+Option+Command+Esc**. Start / 시작: open beyond 93° with the default 90° setting, then lower the lid / 기본 90° 설정에서는 93° 이상 연 뒤 내리세요.
 
@@ -40,7 +40,9 @@ Emergency / 긴급 탈출: click the effect / 효과 화면 클릭, or **Control
 
 A native macOS lid-motion visual-effect development app. A soft aperture, bounded counter-motion and adjustable blur accompany the lid movement. The app does not track eyes or guarantee a physically stationary picture.
 
-Version 0.1.12 · by **bsl lab** · [MIT license](LICENSE).
+Public development preview 0.1.14 · by **bsl lab** · [MIT license](LICENSE).
+
+Includes content motion through 30/25/20°, lighter bottom-hinge blur, cursor-free captured frames and an explicit, confirmed Recover Permission… button. The live system cursor remains visible. No Terminal is needed for the normal recovery flow.
 
 This public development preview includes source and a downloadable app, not a claim of complete device compatibility or a completed commercial release. See [provenance and review limits](PROVENANCE.md) and [license scope](LICENSE-STATUS.md).
 

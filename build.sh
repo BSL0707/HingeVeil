@@ -15,7 +15,10 @@ VEIL_SWIFT="$DEVELOPER_DIR/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift"
 VEIL_BIN=$("$VEIL_SWIFT" build -c release --show-bin-path --disable-sandbox --scratch-path .build --manifest-cache local)
 VEIL_APP=${1:-"$VEIL_PROJECT/Build/HingeVeil.app"}
 mkdir -p "$VEIL_APP/Contents/MacOS" "$VEIL_APP/Contents/Resources"
+mkdir -p "$VEIL_APP/Contents/Helpers"
 cp "$VEIL_BIN/HingeVeil" "$VEIL_APP/Contents/MacOS/HingeVeil"
+cp "$VEIL_BIN/HingeVeilRecovery" "$VEIL_APP/Contents/Helpers/HingeVeilRecovery"
+codesign --force --sign - --identifier com.bsl0707.hingeveil.preview.recovery-helper "$VEIL_APP/Contents/Helpers/HingeVeilRecovery"
 cp Info.plist "$VEIL_APP/Contents/Info.plist"
 cp Sources/HingeVeil/Resources/PreviewTiger.png "$VEIL_APP/Contents/Resources/PreviewTiger.png"
 for VEIL_LANGUAGE in en ko; do

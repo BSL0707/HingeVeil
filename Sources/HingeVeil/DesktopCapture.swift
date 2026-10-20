@@ -62,7 +62,10 @@ final class DesktopCapture: NSObject, SCStreamOutput, SCStreamDelegate {
         config.pixelFormat = kCVPixelFormatType_32BGRA
         config.queueDepth = 3
         config.minimumFrameInterval = CMTime(value: 1, timescale: 15)
-        config.showsCursor = true
+        // The OS already draws the live pointer above our panel. Baking it
+        // into captured frames creates a second, warped/lagging cursor.
+        // Exclude it from the stream; never hide or replace the system cursor.
+        config.showsCursor = false
         config.capturesAudio = false
         config.preservesAspectRatio = true
         if #available(macOS 15, *) { config.captureMicrophone = false }

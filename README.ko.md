@@ -1,8 +1,8 @@
 # HingeVeil · 힌지베일
 
-[![설치파일 다운로드 / Download for macOS · v0.1.12 · Apple Silicon](Docs/Download.svg)](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.12/HingeVeil-0.1.12-AppleSilicon.dmg)
+[![설치파일 다운로드 / Download for macOS · v0.1.14 · Apple Silicon](Docs/Download.svg)](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.14/HingeVeil-0.1.14-AppleSilicon.dmg)
 
-[한국어 설치방법](#한국어-설치방법) · [English installation](README.md#english-installation) · [릴리스·SHA-256 확인](https://github.com/BSL0707/HingeVeil/releases/tag/v0.1.12)
+[한국어 설치방법](#한국어-설치방법) · [English installation](README.md#english-installation) · [릴리스·SHA-256 확인](https://github.com/BSL0707/HingeVeil/releases/tag/v0.1.14)
 
 macOS 14 이상 · Apple Silicon (arm64) · **공개 개발 미리보기**. 지원되는 내장 덮개 센서와 내장 화면이 있는 맥북용이며, 모든 기종의 호환을 보장하지 않습니다.
 
@@ -14,9 +14,9 @@ macOS 14 이상 · Apple Silicon (arm64) · **공개 개발 미리보기**. 지�
 
 **Apple Developer ID 서명·공증이 없는 임시 서명 개발판입니다.** macOS가 실행을 막을 수 있습니다. 출처와 파일을 확인하고 본인이 신뢰하는 경우에만 시스템이 제공하는 앱별 **확인 없이 열기**를 사용하세요. Gatekeeper·SIP를 끄거나 격리 속성을 지우지 마세요. [Apple 공식 안내](https://support.apple.com/ko-kr/102445)
 
-[한글 설치·권한·탈출 상세 안내](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.12/Install.ko.txt) · [English installation guide](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.12/Install.en.txt) · [한글 사용설명서](Docs/Manual.ko.md) · [English manual](Docs/Manual.en.md)
+[한글 설치·권한·탈출 상세 안내](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.14/Install.ko.txt) · [English installation guide](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.14/Install.en.txt) · [한글 사용설명서](Docs/Manual.ko.md) · [English manual](Docs/Manual.en.md)
 
-**이미 허용했는데 계속 미확인이라면:** 앱의 **권한·재시작 도움말** 또는 [구버전 권한 복구 안내](Docs/Permissions.ko.md)를 확인하세요. [English recovery guide](Docs/Permissions.en.md)도 제공합니다. 임시 서명이 바뀐 업데이트는 여전히 수동 재허용이 필요할 수 있으며, 이 버전이 충돌을 자동·영구 해결하는 것은 아닙니다.
+**이미 허용했는데 계속 미확인이라면:** 재확인·재시작 후에도 안 되면 앱의 **권한 복구…**를 사용하세요. 확인창 동의 후 기존 HingeVeil 화면 허용만 해제하고 같은 앱을 다시 엽니다. 시스템 허용은 직접 눌러야 합니다. **권한·재시작 도움말** 또는 [구버전 권한 복구 안내](Docs/Permissions.ko.md)를 확인하세요. [English recovery guide](Docs/Permissions.en.md)도 제공합니다. 임시 서명이 바뀐 업데이트는 여전히 수동 재허용이 필요할 수 있으며, 이 버전이 충돌을 자동·영구 해결하는 것은 아닙니다.
 
 기본 시작 각도 90°에서는 덮개를 93° 이상 충분히 연 뒤 내리세요. 화면이 가려지면 **효과 화면 클릭** 또는 **Control+Option+Command+Esc**로 즉시 해제합니다. 캡처까지 멈추려면 실제 덮개 효과를 끄거나 앱을 종료하세요.
 
@@ -26,7 +26,9 @@ macOS 14 이상 · Apple Silicon (arm64) · **공개 개발 미리보기**. 지�
 
 덮개 움직임에 맞춰 제한된 반대 방향 보정·부드러운 윤곽·블러를 표시하는 네이티브 macOS 개발 앱입니다. 눈 위치를 추적하지 않으며 화면의 공간상 물리적 고정을 보장하지 않습니다.
 
-버전 0.1.12 · 제작 **bsl lab** · [MIT 라이선스](LICENSE).
+공개 개발 미리보기 0.1.14 · 제작 **bsl lab** · [MIT 라이선스](LICENSE).
+
+30·25·20도 구간의 화면 보정 움직임을 늘리고 하단 힌지 근처 블러를 약하게 했습니다. 캡처 프레임에서는 커서를 제외하고 실제 시스템 커서는 그대로 표시합니다. 확인창 동의 후 이 앱의 화면 권한만 초기화·재실행하는 ‘권한 복구…’ 버튼을 추가했습니다. 일반 복구에 터미널은 필요 없습니다.
 
 소스와 설치 앱을 공개한 개발 미리보기 버전입니다. 모든 기종 호환이나 유료 출시 완료를 뜻하지 않습니다. [구현 출처·검토 한계](PROVENANCE.md)와 [라이선스 범위](LICENSE-STATUS.md)를 확인하세요.
 
