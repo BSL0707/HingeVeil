@@ -54,6 +54,9 @@ def allowed_source_path(relative):
         return relative in ROOT_FILES
     if parts[0] == ".github":
         return relative in GITHUB_FILES
+    # A single static README badge; do not broadly allow SVG or other web assets.
+    if relative == "Docs/Download.svg":
+        return True
     return (parts[0] in ROOT_DIRS
             and not any(part.startswith(".") or part in {"__pycache__", "Backups", "Build", "Previews"} for part in parts[1:])
             and path.suffix.lower() in SOURCE_SUFFIXES)

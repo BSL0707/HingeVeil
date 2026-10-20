@@ -1,12 +1,32 @@
 # HingeVeil · 힌지베일
 
+[![설치파일 다운로드 / Download for macOS · v0.1.11 · Apple Silicon](Docs/Download.svg)](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.11/HingeVeil-0.1.11-AppleSilicon.dmg)
+
+[한국어 설치방법](#한국어-설치방법) · [English installation](README.md#english-installation) · [릴리스·SHA-256 확인](https://github.com/BSL0707/HingeVeil/releases/tag/v0.1.11)
+
+macOS 14 이상 · Apple Silicon (arm64) · **공개 개발 미리보기**. 지원되는 내장 덮개 센서와 내장 화면이 있는 맥북용이며, 모든 기종의 호환을 보장하지 않습니다.
+
+## 한국어 설치방법
+
+1. 위 버튼으로 **DMG 설치파일**을 받습니다. `Source code (zip)`은 소스이며 설치파일이 아닙니다.
+2. 기존 HingeVeil·다른 덮개 효과 앱을 종료합니다. DMG를 열고 **HingeVeil.app → Applications(응용 프로그램)** 으로 끌어 넣습니다. 디스크를 추출한 뒤 응용 프로그램 폴더의 HingeVeil을 실행합니다.
+3. **화면 권한 확인**을 누르고 시스템 설정 → 개인정보 보호 및 보안 → **화면 및 시스템 오디오 녹음**에서 HingeVeil을 허용합니다. macOS에 따라 '화면 기록'으로 표시됩니다. 안내가 나오면 종료 및 다시 열기를 선택합니다.
+
+**Apple Developer ID 서명·공증이 없는 임시 서명 개발판입니다.** macOS가 실행을 막을 수 있습니다. 출처와 파일을 확인하고 본인이 신뢰하는 경우에만 시스템이 제공하는 앱별 **확인 없이 열기**를 사용하세요. Gatekeeper·SIP를 끄거나 격리 속성을 지우지 마세요. [Apple 공식 안내](https://support.apple.com/ko-kr/102445)
+
+[한글 설치·권한·탈출 상세 안내](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.11/Install.ko.txt) · [English installation guide](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.11/Install.en.txt) · [한글 사용설명서](Docs/Manual.ko.md) · [English manual](Docs/Manual.en.md)
+
+기본 시작 각도 90°에서는 덮개를 93° 이상 충분히 연 뒤 내리세요. 화면이 가려지면 **효과 화면 클릭** 또는 **Control+Option+Command+Esc**로 즉시 해제합니다. 캡처까지 멈추려면 실제 덮개 효과를 끄거나 앱을 종료하세요.
+
+## 앱 소개
+
 [English](README.md) · [한국어 설명서](Docs/Manual.ko.md) · [English manual](Docs/Manual.en.md)
 
 덮개 움직임에 맞춰 제한된 반대 방향 보정·부드러운 윤곽·블러를 표시하는 네이티브 macOS 개발 앱입니다. 눈 위치를 추적하지 않으며 화면의 공간상 물리적 고정을 보장하지 않습니다.
 
 버전 0.1.11 · 제작 **bsl lab** · [MIT 라이선스](LICENSE).
 
-소스 공개를 준비한 개발 미리보기 버전입니다. 모든 기종 호환이나 유료 출시 완료를 뜻하지 않습니다. [구현 출처·검토 한계](PROVENANCE.md)와 [라이선스 범위](LICENSE-STATUS.md)를 확인하세요.
+소스와 설치 앱을 공개한 개발 미리보기 버전입니다. 모든 기종 호환이나 유료 출시 완료를 뜻하지 않습니다. [구현 출처·검토 한계](PROVENANCE.md)와 [라이선스 범위](LICENSE-STATUS.md)를 확인하세요.
 
 ## 언어와 동작
 
@@ -38,7 +58,7 @@ python3 scripts/audit_publication.py
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```
 
-비대화형 소스·테스트·빌드 전체 검사는 `bash scripts/ci.sh`로 실행합니다. GitHub 검사 설정은 고정된 checkout 버전·읽기 전용 권한·인증정보 미보관을 사용합니다. 바탕화면 캡처·앱 설치·릴리스 게시는 하지 않습니다. 실제 GitHub 실행은 저장소를 만든 뒤 확인해야 합니다.
+비대화형 소스·테스트·빌드 전체 검사는 `bash scripts/ci.sh`로 실행합니다. GitHub 검사 설정은 고정된 checkout 버전·읽기 전용 권한·인증정보 미보관을 사용합니다. 바탕화면 캡처·앱 설치·릴리스 게시는 하지 않습니다. 현재 [GitHub Actions 결과](https://github.com/BSL0707/HingeVeil/actions/workflows/ci.yml)를 확인할 수 있습니다.
 
 창/전환 검사는 실제 화면 대신 자체 그림을 잠깐 표시합니다. 센서·캡처·긴급키·감시·설정 저장 없이 언어별 UI만 검토하려면 다음을 사용합니다.
 

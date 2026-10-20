@@ -58,6 +58,11 @@
       "sha256": "8c25cd53a3ae28bee03bd5e2159f4dc2fa58773e2d8b54fadecc75c2348e62fe"
     },
     {
+      "path": "Docs/Download.svg",
+      "bytes": 830,
+      "sha256": "aa59a69d69673ea09ccb833c322c94c5124e5bf4f20469ac280f5a3ed91ac32b"
+    },
+    {
       "path": "Docs/GitHubUpload.en.md",
       "bytes": 5435,
       "sha256": "5da73ca0be84a3ceca47699ab721ddf2ea9a1ec5bc0e39bea4f1200614e4444e"
@@ -114,13 +119,13 @@
     },
     {
       "path": "README.ko.md",
-      "bytes": 5052,
-      "sha256": "fe6d7c36afc23ae0fdf749be8ff0c7aa982327d6f42b0d0fd56aa02cf13f2a08"
+      "bytes": 7444,
+      "sha256": "8346596d8aee6170d30d5d2a0db5b4a99d21dc774dca92c0537afe540cab847f"
     },
     {
       "path": "README.md",
-      "bytes": 4721,
-      "sha256": "26546a44b797dfe6a33b4a2d841d7c66156425ecf5d7e6a1ce091263458c961c"
+      "bytes": 7928,
+      "sha256": "1f4e0c0a24b1b7fbcd1cf80dbd3b7a43f2135d1603a2d4783bf580521737a8bb"
     },
     {
       "path": "SECURITY.md",
@@ -249,8 +254,8 @@
     },
     {
       "path": "scripts/audit_publication.py",
-      "bytes": 8932,
-      "sha256": "59ecc9fc6d34b943987b82bc1bd4bc987b54192501eb0bda583c9fdb775d973c"
+      "bytes": 9074,
+      "sha256": "3aa1bd7c8c491af2e2a0bddfa608d8eabb57ac623c5cfcf48f65b8cd2ec0f089"
     },
     {
       "path": "scripts/check_git_history.py",
@@ -274,8 +279,8 @@
     },
     {
       "path": "scripts/test_audit_publication.py",
-      "bytes": 2843,
-      "sha256": "643de7eae0ed478519ad5edd087009dbc6f61769fb81bafd51e61548dd219c47"
+      "bytes": 3170,
+      "sha256": "9ee9b851a906ceca533e6f55aaa7d41a9643b4c7442741cbcbefd98bc7aed0ea"
     },
     {
       "path": "scripts/test_git_history.py",

@@ -46,6 +46,11 @@ class AuditTests(unittest.TestCase):
     def test_invalid_png_cannot_hide_binary(self):
         found, _ = scan_source_data(b"not png", "Sources/fake.png")
         self.assertEqual(found[0]["rule"], "invalid_png")
+    def test_only_named_readme_svg_is_allowlisted(self):
+        self.assertTrue(allowed_source_path("Docs/Download.svg"))
+        self.assertFalse(allowed_source_path("Docs/other.svg"))
+        self.assertFalse(allowed_source_path("Sources/Download.svg"))
+        self.assertFalse(allowed_source_path("../Docs/Download.svg"))
     def test_new_signing_key_types_are_not_allowlisted(self):
         self.assertFalse(allowed_source_path("Sources/signing.p8"))
         self.assertFalse(allowed_source_path("Sources/signing.provisionprofile"))
