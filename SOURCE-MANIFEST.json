@@ -1,5 +1,5 @@
 {
-  "status": "local source export; not uploaded",
+  "status": "source snapshot for 0.1.12; release availability is documented in README",
   "license": "MIT_selected_by_owner_rights_review_not_certified",
   "files": [
     {
@@ -49,8 +49,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 855,
-      "sha256": "b670d3e02356b5ce5c97233213ea1464ea964a8a2e68c468cb781512e289281c"
+      "bytes": 1918,
+      "sha256": "ebab37c958f040e77e3523d1d1c8684d4ac4acf7caf4127bb611a9cc1dba5060"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -60,7 +60,7 @@
     {
       "path": "Docs/Download.svg",
       "bytes": 830,
-      "sha256": "aa59a69d69673ea09ccb833c322c94c5124e5bf4f20469ac280f5a3ed91ac32b"
+      "sha256": "aaa6b1e1a959630342963a0b18d936f876971a8655344ca7c46b280d4c0eba3a"
     },
     {
       "path": "Docs/GitHubUpload.en.md",
@@ -74,13 +74,23 @@
     },
     {
       "path": "Docs/Manual.en.md",
-      "bytes": 6397,
-      "sha256": "193ff23a4633475ccd4e6e1399f99e4bec4803e65686da6784752dda2119b43f"
+      "bytes": 7625,
+      "sha256": "c0dfcc8d24aed89346e607935ed4f2f4c6fededc2916c6a25387dac0b51de6ce"
     },
     {
       "path": "Docs/Manual.ko.md",
-      "bytes": 7279,
-      "sha256": "8c8d714039ed1c0bc363ced36141e9ba3b8e09252002374c0034aaebba34fc32"
+      "bytes": 8805,
+      "sha256": "0174f01f604ab89176e0aaf2005dbe2d5bd136fee71ebfc805d37b303afecbe9"
+    },
+    {
+      "path": "Docs/Permissions.en.md",
+      "bytes": 3282,
+      "sha256": "dccf800422d0a69850b99094b4e9d7e56a626f17c8a606e5e752469fc8ccc7ab"
+    },
+    {
+      "path": "Docs/Permissions.ko.md",
+      "bytes": 3982,
+      "sha256": "88fc58d8d4b86212a56383961ca377661e47e5723945e83e97404cb74fcd230d"
     },
     {
       "path": "Docs/PublicationReview.md",
@@ -95,7 +105,7 @@
     {
       "path": "Info.plist",
       "bytes": 1227,
-      "sha256": "e10fca9bebc2514522f8b1e54fb9dc01c1b34d26fb5c5537c6c1bc124bb99f22"
+      "sha256": "4116a602ed36a632b9750a480ad5e3eb2e79f4b029c4c4fe3b75966ce5686ebf"
     },
     {
       "path": "LICENSE",
@@ -119,13 +129,13 @@
     },
     {
       "path": "README.ko.md",
-      "bytes": 7444,
-      "sha256": "8346596d8aee6170d30d5d2a0db5b4a99d21dc774dca92c0537afe540cab847f"
+      "bytes": 7925,
+      "sha256": "b7ab28cf4d9465834bea8e33942ec1e5f79e27b1ecdb136b6a94e175fc4e790e"
     },
     {
       "path": "README.md",
-      "bytes": 7928,
-      "sha256": "1f4e0c0a24b1b7fbcd1cf80dbd3b7a43f2135d1603a2d4783bf580521737a8bb"
+      "bytes": 8644,
+      "sha256": "e21a998b270ec10d6675e5f267bf2ca4ceba1269036ff8a82cfbc74895eace58"
     },
     {
       "path": "SECURITY.md",
@@ -134,8 +144,8 @@
     },
     {
       "path": "Sources/HingeVeil/AppController.swift",
-      "bytes": 14230,
-      "sha256": "3196bd697b7740778c8c253d43ff70f572b6e7675c02ddfdfda477b6b860a545"
+      "bytes": 17091,
+      "sha256": "982883ae9d25e8f64968c33cbbe40ab6d0a91a7e3ea552e9558dfeae6a44bd36"
     },
     {
       "path": "Sources/HingeVeil/DesktopCapture.swift",
@@ -174,8 +184,8 @@
     },
     {
       "path": "Sources/HingeVeil/SettingsView.swift",
-      "bytes": 6521,
-      "sha256": "f1aab7526a282b60169ca8d094c54c4817ffe6dbc64cb6b1f40258e5df948af0"
+      "bytes": 10248,
+      "sha256": "2a3e093e7e32f7504f969fc6a4e66fa80940216f1f2b6e7b9f18c76ea9eb2f4c"
     },
     {
       "path": "Sources/HingeVeil/VeilRenderer.swift",
@@ -189,8 +199,8 @@
     },
     {
       "path": "Sources/HingeVeil/main.swift",
-      "bytes": 8357,
-      "sha256": "4fe9f3ee2aeb5cb0673c3d835366a15797ac1564a43a0fd9b1d6edab0167c946"
+      "bytes": 8622,
+      "sha256": "ca85e123738ad9ec333dec4286e9edc19d45ca289c9ee47a43bea40bdae3de11"
     },
     {
       "path": "Sources/HingeVeilCore/EffectGate.swift",
@@ -204,13 +214,13 @@
     },
     {
       "path": "Sources/HingeVeilCore/Resources/Manual.en.txt",
-      "bytes": 6397,
-      "sha256": "193ff23a4633475ccd4e6e1399f99e4bec4803e65686da6784752dda2119b43f"
+      "bytes": 7625,
+      "sha256": "c0dfcc8d24aed89346e607935ed4f2f4c6fededc2916c6a25387dac0b51de6ce"
     },
     {
       "path": "Sources/HingeVeilCore/Resources/Manual.ko.txt",
-      "bytes": 7279,
-      "sha256": "8c8d714039ed1c0bc363ced36141e9ba3b8e09252002374c0034aaebba34fc32"
+      "bytes": 8805,
+      "sha256": "0174f01f604ab89176e0aaf2005dbe2d5bd136fee71ebfc805d37b303afecbe9"
     },
     {
       "path": "Sources/HingeVeilCore/Resources/en.lproj/InfoPlist.strings",
@@ -219,8 +229,8 @@
     },
     {
       "path": "Sources/HingeVeilCore/Resources/en.lproj/Localizable.strings",
-      "bytes": 7350,
-      "sha256": "ae6dc44f5467e890bdd2bd1066781b6acbbc9fba28e5ffb6296ec7c5d3659968"
+      "bytes": 11495,
+      "sha256": "5d333af6d05dfc9dd9631b52929f5774f0bb3d56062c284028aa938ce59c6d23"
     },
     {
       "path": "Sources/HingeVeilCore/Resources/ko.lproj/InfoPlist.strings",
@@ -229,8 +239,13 @@
     },
     {
       "path": "Sources/HingeVeilCore/Resources/ko.lproj/Localizable.strings",
-      "bytes": 8081,
-      "sha256": "b61744427e3a387b5eb9bfc0cb47914f7c5630721bfee67d9cab563f9647e809"
+      "bytes": 12694,
+      "sha256": "15a4bf981ae1ae5ffd5a91ef5f3b9918e6ab6b49fcf5a7b9f6cb234126c04aaf"
+    },
+    {
+      "path": "Sources/HingeVeilCore/ScreenPermissionState.swift",
+      "bytes": 1712,
+      "sha256": "8516adeafb4013d10d8ca502a00e76ead59d59076224793e2473b2d4f53c7b72"
     },
     {
       "path": "Sources/HingeVeilCore/VeilMotion.swift",
@@ -244,8 +259,13 @@
     },
     {
       "path": "Tests/HingeVeilCoreTests/LocalizationTests.swift",
-      "bytes": 2652,
-      "sha256": "7df1c605efa349859bce8191e4530cc0854d9e4e0d33d374c8da3ea8e8f9159f"
+      "bytes": 3286,
+      "sha256": "b047f503d8a624cb26c725920f2bc13cd134da282a882d0e8b53970a9613353e"
+    },
+    {
+      "path": "Tests/HingeVeilCoreTests/ScreenPermissionTests.swift",
+      "bytes": 2606,
+      "sha256": "3f421928ac666ab9923fc26f36e7aae4d7adca9d42d6b02416cbd595e075e02c"
     },
     {
       "path": "build.sh",
@@ -286,6 +306,11 @@
       "path": "scripts/test_git_history.py",
       "bytes": 4041,
       "sha256": "72765583036f4d43fc840b273174b30fa399ac6c564b9bd02e02c663c97bf611"
+    },
+    {
+      "path": "scripts/test_permission_contract.py",
+      "bytes": 2130,
+      "sha256": "ab2776fe9bd52d15f557071a76235b85cf7f5c12efae1e741d7ac68755cb3370"
     },
     {
       "path": "scripts/test_source_export.py",

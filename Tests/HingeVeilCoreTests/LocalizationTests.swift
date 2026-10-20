@@ -45,4 +45,15 @@ final class LocalizationTests: XCTestCase {
             }
         }
     }
+    func testPermissionGuidanceAndManualRecoveryAreLocalized() {
+        for language in [AppLanguage.korean, .english] {
+            let catalog = L10n.catalog(for: language)
+            for key in ["화면 권한 요청", "권한 다시 확인", "권한·재시작 도움말", "화면 권한 확인됨", "화면 권한 확인 필요"] {
+                XCTAssertNotNil(catalog[key], key)
+            }
+            let manual = L10n.manual(language: language)
+            XCTAssertTrue(manual.contains("tccutil reset ScreenCapture com.bsl0707.hingeveil.preview"))
+            XCTAssertTrue(manual.contains("0.1.12"))
+        }
+    }
 }

@@ -30,17 +30,19 @@ private struct VeilPreview: NSViewRepresentable {
 }
 
 struct SettingsView: View {
+    private enum HelpSheet: String, Identifiable { case manual, permissions; var id: String { rawValue } }
     @ObservedObject var controller: AppController
-    @State private var showManual = false
+    @State private var helpSheet: HelpSheet?
 
-    init(controller: AppController, showManual: Bool = false) {
+    init(controller: AppController, showManual: Bool = false, showPermissionHelp: Bool = false) {
         self.controller = controller
-        _showManual = State(initialValue: showManual)
+        _helpSheet = State(initialValue: showPermissionHelp ? .permissions : (showManual ? .manual : nil))
     }
     private func t(_ key: String) -> String { L10n.text(key, language: controller.language) }
     private func m(_ message: AppText) -> String { message.localized(in: controller.language) }
 
     var body: some View {
+        ScrollView {
         VStack(alignment: .leading, spacing: 18) {
             HStack(spacing: 14) {
                 Image(nsImage: IconArtwork.image(size: 56))
@@ -64,6 +66,22 @@ struct SettingsView: View {
                     .accessibilityLabel(t("언어")).frame(width: 330)
                 Spacer()
             }
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Label(t(controller.permission ? "화면 권한 확인됨" : "화면 권한 확인 필요"),
+                          systemImage: controller.permission ? "checkmark.shield" : "exclamationmark.shield")
+                        .foregroundStyle(controller.permission ? Color.green : Color.orange)
+                    Spacer()
+                    Button(t("화면 권한 요청")) { controller.requestPermission() }
+                        .disabled(controller.isReviewMode || !controller.permissionState.canRequest)
+                    Button(t("권한 다시 확인")) { controller.refreshPermission(announce: true) }
+                        .disabled(controller.isReviewMode || controller.permissionState.requestInFlight)
+                    Button(t("설정 열기")) { controller.openPermissionSettings() }.disabled(controller.isReviewMode)
+                }
+                Text(m(controller.permissionState.guidance)).font(.caption).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Button(t("권한·재시작 도움말")) { helpSheet = .permissions }
+            }.padding(12).background(Color.secondary.opacity(0.08)).clipShape(RoundedRectangle(cornerRadius: 10))
             VeilPreview(angle: controller.previewAngle, options: controller.options)
                 .frame(width: 480, height: 300)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -102,26 +120,44 @@ struct SettingsView: View {
             Text(m(controller.status)).font(.callout).foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
             HStack {
-                Button(t("화면 권한 확인")) { controller.requestPermission() }
-                    .accessibilityLabel(t("화면 권한 확인")).disabled(controller.isReviewMode)
                 Button(t("30% 접힘 테스트 · 2초")) { controller.runTest() }
                     .accessibilityLabel(t("30% 접힘 테스트 · 2초")).disabled(controller.isReviewMode)
                 Spacer()
-                Button(t("사용 설명서")) { showManual = true }.accessibilityLabel(t("사용 설명서"))
+                Button(t("사용 설명서")) { helpSheet = .manual }.accessibilityLabel(t("사용 설명서"))
             }
             Text(t("화면 클릭 · ⌃⌥⌘Esc로 해제 / 15초 안전 제한 / 화면·소리 저장 및 전송 없음"))
                 .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
         }
-        .padding(26).frame(width: 720)
+        .padding(26)
+        }.frame(width: 720)
         .environment(\.locale, Locale(identifier: controller.language.resolved().rawValue))
-        .sheet(isPresented: $showManual) {
+        .sheet(item: $helpSheet) { sheet in
             VStack(alignment: .leading, spacing: 16) {
-                Text(t("HingeVeil 사용 설명서")).font(.title2.bold())
+                Text(t(sheet == .manual ? "HingeVeil 사용 설명서" : "권한·재시작 도움말")).font(.title2.bold())
                 ScrollView {
+                    if sheet == .manual {
                     Text(L10n.manual(language: controller.language))
                         .frame(maxWidth: .infinity, alignment: .leading).textSelection(.enabled)
+                    } else {
+                        VStack(alignment: .leading, spacing: 16) {
+                            Text(t("1. 설정에서 HingeVeil만 허용한 뒤 앱으로 돌아와 ‘권한 다시 확인’을 누르세요. 앱은 돌아올 때도 권한을 다시 읽으며 같은 실행 중에 시스템 요청을 반복하지 않습니다."))
+                            Text(t("2. 허용했는데도 미확인이면 ‘앱 종료’를 누르고 응용 프로그램 폴더의 HingeVeil을 다시 여세요. macOS가 ‘종료 및 다시 열기’를 제공하면 사용하세요. 다시 허용해도 정상 적용을 보장할 수는 없습니다."))
+                            Text(t("3. 구버전에서 업데이트했다면 임시 서명이 달라 기존 허용 기록과 충돌할 수 있습니다. 다른 복사본과 덮개 효과 앱을 종료하고 응용 프로그램에 한 버전만 두세요. 동일한 DMG를 다시 받는 것만으로 서명은 바뀌지 않습니다."))
+                            Text(t("4. 재시작 후에도 계속되면 앱을 종료하고, 본인이 원할 때만 터미널에서 아래 명령으로 HingeVeil의 화면 권한만 초기화하세요. 다른 앱이나 모든 권한을 초기화하지 마세요."))
+                            Text("tccutil reset ScreenCapture com.bsl0707.hingeveil.preview")
+                                .font(.system(.caption, design: .monospaced)).textSelection(.enabled)
+                            Text(t("그 뒤 같은 앱을 다시 열어 ‘화면 권한 요청’을 한 번 누르고 직접 허용하세요. 이 앱은 초기화 명령을 자동 실행하지 않습니다. Gatekeeper·SIP를 끄거나 격리 속성을 지우지 마세요."))
+                        }.frame(maxWidth: .infinity, alignment: .leading).textSelection(.enabled)
+                    }
                 }
-                Button(t("닫기")) { showManual = false }.keyboardShortcut(.defaultAction)
+                HStack {
+                    if sheet == .permissions {
+                        Button(t("설정 열기")) { controller.openPermissionSettings() }.disabled(controller.isReviewMode)
+                        Button(t("앱 종료")) { controller.quitForPermissionRestart() }.disabled(controller.isReviewMode)
+                    }
+                    Spacer()
+                    Button(t("닫기")) { helpSheet = nil }.keyboardShortcut(.defaultAction)
+                }
             }.padding(24).frame(width: 640, height: 560)
         }
     }

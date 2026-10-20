@@ -1,5 +1,5 @@
 HingeVeil User Manual
-English · Development preview 0.1.11
+English · Development preview 0.1.12
 
 1. Requirements and limitations
 
@@ -11,9 +11,17 @@ Use Language in the settings window to choose Follow System, 한국어 or Englis
 
 3. Permission and first launch
 
-Quit other lid-effect apps before starting. Click Check Screen Permission. In System Settings → Privacy & Security → Screen & System Audio Recording, allow HingeVeil. On older macOS releases the pane may be called Screen Recording. If macOS asks, choose Quit & Reopen. This app does not require Accessibility, Input Monitoring, microphone or audio-capture permission.
+Quit other lid-effect apps and HingeVeil copies. Run one version from Applications, not from the mounted DMG. Click Request Access once. In System Settings → Privacy & Security → Screen & System Audio Recording, allow HingeVeil yourself. Older macOS releases may call this Screen Recording. Accessibility, Input Monitoring, microphone and audio-capture permission are not required.
 
-Local builds use ad-hoc signing, not Developer ID signing or notarization. Gatekeeper may warn or block a downloaded binary. Do not disable Gatekeeper, SIP or system-wide security protections. Apple Developer enrollment, paid signing and notarization are outside this source-upload preparation. A rebuilt development binary may need permission reconnected. Only reset HingeVeil's screen permission when necessary; do not reset all applications or services.
+The app reads authorization again when you return, and at most once per second while it is foreground. Recheck Permission never displays a system request. Enabling the effect and running a test also only read the state; they do not repeatedly request access. The explicit Request Access button can make at most one system request per app process. After Screen access confirmed appears, enable the live effect yourself.
+
+If Settings allows access but the app remains unconfirmed, open Permission & Restart Help. Use the system's Quit & Reopen if offered, or Quit App and reopen HingeVeil from Applications. Closing the window is not quitting. Restarting is not a guarantee of recovery; do not keep pressing Allow.
+
+Updating an older build can change its ad-hoc signature and conflict with the saved approval. Downloading the same DMG again does not itself change its signature. If restarting does not help, quit the app. Only if you choose, run this command in Terminal to reset this app's screen permission alone:
+  tccutil reset ScreenCapture com.bsl0707.hingeveil.preview
+Reopen the same app, click Request Access once and approve it yourself. The app never runs this command or grants access automatically. Do not reset other apps, services or all permissions. If organizational policy or OS state still prevents access, redact diagnostics before reporting the problem.
+
+This release is ad-hoc signed, not Developer ID signed or Apple notarized. Gatekeeper may warn or block launch, and permission continuity across updates is not guaranteed. Do not disable Gatekeeper, SIP or system-wide protections, or remove quarantine attributes. Apple Developer enrollment, paid signing and notarization are outside this task.
 
 4. Preview and live use
 
@@ -57,4 +65,4 @@ Screen frames are used in memory for local rendering. The app includes no screen
 
 11. Release status and licensing
 
-HingeVeil 0.1.11 source is prepared under the MIT license, copyright (c) 2026 bsl lab, as explicitly selected by the project owner. Include the LICENSE notice when redistributing. AI artwork provenance and rights-review limits are documented in PROVENANCE.md and LICENSE-STATUS.md. This is a development preview, not a promise of device compatibility, completed legal clearance or a completed binary release. Repository creation, hosted CI and private security reporting settings are separate next steps; this preparation does not upload anything.
+HingeVeil 0.1.12 is a public development preview under the owner-selected MIT license, copyright (c) 2026 bsl lab. Include the LICENSE notice when redistributing. Source, installers and current publication status are available at https://github.com/BSL0707/HingeVeil . AI artwork provenance and rights-review limits are documented in PROVENANCE.md and LICENSE-STATUS.md. This is not a guarantee of compatibility, legal clearance, security or complete resolution of signing-related permission issues.

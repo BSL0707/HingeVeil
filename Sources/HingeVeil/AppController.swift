@@ -16,7 +16,8 @@ final class AppController: ObservableObject {
     let isReviewMode: Bool
     var onLanguageChange: (() -> Void)?
     @Published private(set) var angle: Double?
-    @Published private(set) var permission = CGPreflightScreenCaptureAccess()
+    @Published private(set) var permissionState = ScreenPermissionState()
+    var permission: Bool { permissionState.isGranted }
     @Published var startAngle: Double {
         didSet {
             if !isReviewMode { UserDefaults.standard.set(startAngle, forKey: "startAngle") }
@@ -43,6 +44,7 @@ final class AppController: ObservableObject {
     private var suspended = false
     private var safetyReady = false
     private var diagnosticTime: TimeInterval = 0
+    private var lastPermissionCheck: TimeInterval = 0
 
     var options: VeilOptions { VeilOptions(startAngle: startAngle, blurLevel: blurLevel) }
 
@@ -62,6 +64,7 @@ final class AppController: ObservableObject {
 
     func start() {
         guard !isReviewMode else { return }
+        refreshPermission()
         do {
             try guardProcess.start()
             safetyReady = hotkey.install() && guardProcess.healthy
@@ -92,18 +95,61 @@ final class AppController: ObservableObject {
             object: nil, queue: .main) { [weak self] _ in
                 MainActor.assumeIsolated { self?.rebuildDisplay() }
             })
+        observers.append(NotificationCenter.default.addObserver(forName: NSApplication.didBecomeActiveNotification,
+            object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated { _ = self?.refreshPermission() }
+            })
         if UserDefaults.standard.bool(forKey: "effectEnabled") {
             if permission { setEnabled(true) }
-            else { status = "저장된 효과 설정이 있지만 화면 권한이 필요합니다. ‘화면 권한 확인’을 눌러주세요." }
+            else { status = permissionState.guidance }
         } else if permission {
             status = "화면 권한이 확인됐습니다. ‘실제 덮개 효과’를 켜세요."
         }
     }
 
+    @discardableResult
+    func refreshPermission(announce: Bool = false) -> Bool {
+        guard !isReviewMode, !permissionState.requestInFlight else { return permission }
+        lastPermissionCheck = ProcessInfo.processInfo.systemUptime
+        let previouslyGranted = permission
+        var next = permissionState
+        next.observe(granted: CGPreflightScreenCaptureAccess())
+        if next != permissionState { permissionState = next }
+        if previouslyGranted && !permission {
+            enabled = false
+            UserDefaults.standard.set(false, forKey: "effectEnabled")
+            sensor.setFast(false)
+            captureTask?.cancel()
+            captureTask = Task { await capture.stop() }
+            emergency("화면 권한이 확인되지 않아 캡처와 효과를 중지했습니다. 설정에서 권한을 확인하세요.")
+        } else if permission && !enabled && (!previouslyGranted || announce) {
+            status = "권한이 확인됐습니다. 효과를 켤 수 있습니다."
+        } else if !permission && announce { status = permissionState.guidance }
+        return permission
+    }
+
     func requestPermission() {
         guard !isReviewMode else { return }
-        permission = CGPreflightScreenCaptureAccess() || CGRequestScreenCaptureAccess()
-        status = permission ? "권한이 확인됐습니다. 효과를 켤 수 있습니다." : "시스템 설정 → 개인정보 보호 및 보안 → 화면 및 시스템 오디오 녹음에서 HingeVeil을 허용하세요."
+        if refreshPermission(announce: true) { return }
+        guard permissionState.beginRequest() else { status = permissionState.guidance; return }
+        let granted = CGRequestScreenCaptureAccess()
+        permissionState.completeRequest(granted: granted || CGPreflightScreenCaptureAccess())
+        status = permissionState.guidance
+    }
+
+    func openPermissionSettings() {
+        guard !isReviewMode, let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture") else { return }
+        if !NSWorkspace.shared.open(url) { status = "설정 화면을 열지 못했습니다. 시스템 설정에서 화면 녹화 권한을 직접 확인하세요." }
+    }
+
+    func quitForPermissionRestart() {
+        guard !isReviewMode else { return }
+        let alert = NSAlert()
+        alert.messageText = L10n.text("권한 적용을 위해 앱 종료", language: language)
+        alert.informativeText = L10n.text("HingeVeil을 종료한 뒤 응용 프로그램 폴더에서 다시 여세요. 창만 닫는 것은 종료가 아닙니다. 시스템 권한은 변경하지 않습니다.", language: language)
+        alert.addButton(withTitle: L10n.text("종료", language: language))
+        alert.addButton(withTitle: L10n.text("취소", language: language))
+        if alert.runModal() == .alertFirstButtonReturn { NSApp.terminate(nil) }
     }
 
     func setEnabled(_ value: Bool) {
@@ -122,8 +168,7 @@ final class AppController: ObservableObject {
             status = "기존 macTilt가 실행 중입니다. 기존 앱을 종료한 뒤 HingeVeil을 켜주세요."
             return
         }
-        requestPermission()
-        guard permission else { return }
+        guard refreshPermission(announce: true) else { return }
         enabled = true
         UserDefaults.standard.set(true, forKey: "effectEnabled")
         sensor.setFast(true)
@@ -135,8 +180,7 @@ final class AppController: ObservableObject {
     func runTest() {
         guard !isReviewMode else { return }
         guard safetyReady else { status = "안전 종료 기능을 먼저 확인해주세요."; return }
-        requestPermission()
-        guard permission else { return }
+        guard refreshPermission(announce: true) else { return }
         sensor.setFast(true)
         captureTask?.cancel()
         captureTask = Task { [weak self] in
@@ -209,6 +253,9 @@ final class AppController: ObservableObject {
 
     private func tick() {
         let now = ProcessInfo.processInfo.systemUptime
+        // Read-only, at most once per second while the app is foreground.
+        // Never poll the permission-request API from the rendering loop.
+        if NSApp.isActive && now - lastPermissionCheck >= 1 { refreshPermission() }
         let reading = sensor.snapshot()
         if now - lastStatusTime >= 0.15 {
             angle = reading.angle; sensorText = reading.message
@@ -272,6 +319,8 @@ final class AppController: ObservableObject {
                 "sensorAngle": reading.angle ?? -1, "sensorFresh": now - reading.updated < 0.6,
                 "testActive": testBegan != nil, "needsOpen": gate.needsOpen]
             data["overlay"] = effect?.diagnostics() ?? [:]
+            data["screenPermissionGranted"] = permission
+            data["permissionRequestAttempted"] = permissionState.requestAttempted
             if let json = try? JSONSerialization.data(withJSONObject: data, options: [.sortedKeys]) {
                 try? json.write(to: URL(fileURLWithPath: CommandLine.arguments[index + 1]), options: .atomic)
             }

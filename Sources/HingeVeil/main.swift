@@ -10,9 +10,11 @@ final class VeilAppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem?
     private let reviewLanguage: AppLanguage?
     private let reviewManual: Bool
+    private let reviewPermissions: Bool
 
-    init(reviewLanguage: AppLanguage? = nil, reviewManual: Bool = false) {
+    init(reviewLanguage: AppLanguage? = nil, reviewManual: Bool = false, reviewPermissions: Bool = false) {
         self.reviewLanguage = reviewLanguage; self.reviewManual = reviewManual
+        self.reviewPermissions = reviewPermissions
         super.init()
     }
 
@@ -24,7 +26,7 @@ final class VeilAppDelegate: NSObject, NSApplicationDelegate {
             styleMask: [.titled, .closable, .miniaturizable], backing: .buffered, defer: false)
         window.title = L10n.text("HingeVeil · 힌지베일", language: controller.language)
         window.isReleasedWhenClosed = false
-        window.contentView = NSHostingView(rootView: SettingsView(controller: controller, showManual: reviewManual))
+        window.contentView = NSHostingView(rootView: SettingsView(controller: controller, showManual: reviewManual, showPermissionHelp: reviewPermissions))
         window.center()
         self.window = window
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
@@ -85,7 +87,8 @@ if arguments.count >= 3 && arguments[1] == "--watch-parent", let pid = Int32(arg
             language = AppLanguage(rawValue: arguments[index + 1]) ?? .english
         } else { language = .english }
         let application = NSApplication.shared
-        let delegate = VeilAppDelegate(reviewLanguage: language, reviewManual: arguments.contains("--review-manual"))
+        let delegate = VeilAppDelegate(reviewLanguage: language, reviewManual: arguments.contains("--review-manual"),
+                                       reviewPermissions: arguments.contains("--review-permissions"))
         application.delegate = delegate
         // Inspection only: no capture, sensor, watchdog, hotkey or preference writes.
         // Independent of a modal sheet/menu run-loop mode. This fixture starts

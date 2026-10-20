@@ -1,8 +1,8 @@
 # HingeVeil · 힌지베일
 
-[![설치파일 다운로드 / Download for macOS · v0.1.11 · Apple Silicon](Docs/Download.svg)](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.11/HingeVeil-0.1.11-AppleSilicon.dmg)
+[![설치파일 다운로드 / Download for macOS · v0.1.12 · Apple Silicon](Docs/Download.svg)](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.12/HingeVeil-0.1.12-AppleSilicon.dmg)
 
-[한국어 설치방법](#한국어-설치방법) · [English installation](README.md#english-installation) · [릴리스·SHA-256 확인](https://github.com/BSL0707/HingeVeil/releases/tag/v0.1.11)
+[한국어 설치방법](#한국어-설치방법) · [English installation](README.md#english-installation) · [릴리스·SHA-256 확인](https://github.com/BSL0707/HingeVeil/releases/tag/v0.1.12)
 
 macOS 14 이상 · Apple Silicon (arm64) · **공개 개발 미리보기**. 지원되는 내장 덮개 센서와 내장 화면이 있는 맥북용이며, 모든 기종의 호환을 보장하지 않습니다.
 
@@ -10,11 +10,13 @@ macOS 14 이상 · Apple Silicon (arm64) · **공개 개발 미리보기**. 지�
 
 1. 위 버튼으로 **DMG 설치파일**을 받습니다. `Source code (zip)`은 소스이며 설치파일이 아닙니다.
 2. 기존 HingeVeil·다른 덮개 효과 앱을 종료합니다. DMG를 열고 **HingeVeil.app → Applications(응용 프로그램)** 으로 끌어 넣습니다. 디스크를 추출한 뒤 응용 프로그램 폴더의 HingeVeil을 실행합니다.
-3. **화면 권한 확인**을 누르고 시스템 설정 → 개인정보 보호 및 보안 → **화면 및 시스템 오디오 녹음**에서 HingeVeil을 허용합니다. macOS에 따라 '화면 기록'으로 표시됩니다. 안내가 나오면 종료 및 다시 열기를 선택합니다.
+3. **화면 권한 요청**을 한 번 누르고 시스템 설정 → 개인정보 보호 및 보안 → **화면 및 시스템 오디오 녹음**에서 HingeVeil을 허용합니다. 돌아와 **권한 다시 확인**을 누르세요. 안내가 나오면 종료 및 다시 열기를 선택합니다. 구형 macOS에서는 '화면 기록'으로 표시됩니다.
 
 **Apple Developer ID 서명·공증이 없는 임시 서명 개발판입니다.** macOS가 실행을 막을 수 있습니다. 출처와 파일을 확인하고 본인이 신뢰하는 경우에만 시스템이 제공하는 앱별 **확인 없이 열기**를 사용하세요. Gatekeeper·SIP를 끄거나 격리 속성을 지우지 마세요. [Apple 공식 안내](https://support.apple.com/ko-kr/102445)
 
-[한글 설치·권한·탈출 상세 안내](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.11/Install.ko.txt) · [English installation guide](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.11/Install.en.txt) · [한글 사용설명서](Docs/Manual.ko.md) · [English manual](Docs/Manual.en.md)
+[한글 설치·권한·탈출 상세 안내](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.12/Install.ko.txt) · [English installation guide](https://github.com/BSL0707/HingeVeil/releases/download/v0.1.12/Install.en.txt) · [한글 사용설명서](Docs/Manual.ko.md) · [English manual](Docs/Manual.en.md)
+
+**이미 허용했는데 계속 미확인이라면:** 앱의 **권한·재시작 도움말** 또는 [구버전 권한 복구 안내](Docs/Permissions.ko.md)를 확인하세요. [English recovery guide](Docs/Permissions.en.md)도 제공합니다. 임시 서명이 바뀐 업데이트는 여전히 수동 재허용이 필요할 수 있으며, 이 버전이 충돌을 자동·영구 해결하는 것은 아닙니다.
 
 기본 시작 각도 90°에서는 덮개를 93° 이상 충분히 연 뒤 내리세요. 화면이 가려지면 **효과 화면 클릭** 또는 **Control+Option+Command+Esc**로 즉시 해제합니다. 캡처까지 멈추려면 실제 덮개 효과를 끄거나 앱을 종료하세요.
 
@@ -24,7 +26,7 @@ macOS 14 이상 · Apple Silicon (arm64) · **공개 개발 미리보기**. 지�
 
 덮개 움직임에 맞춰 제한된 반대 방향 보정·부드러운 윤곽·블러를 표시하는 네이티브 macOS 개발 앱입니다. 눈 위치를 추적하지 않으며 화면의 공간상 물리적 고정을 보장하지 않습니다.
 
-버전 0.1.11 · 제작 **bsl lab** · [MIT 라이선스](LICENSE).
+버전 0.1.12 · 제작 **bsl lab** · [MIT 라이선스](LICENSE).
 
 소스와 설치 앱을 공개한 개발 미리보기 버전입니다. 모든 기종 호환이나 유료 출시 완료를 뜻하지 않습니다. [구현 출처·검토 한계](PROVENANCE.md)와 [라이선스 범위](LICENSE-STATUS.md)를 확인하세요.
 
